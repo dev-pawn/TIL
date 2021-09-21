@@ -23,14 +23,14 @@ type: Subject
 body
 
 footer
-'''
-- 타입
- - feat: 새로운 기능
- - fix: 버그 수정
- - docs: 문서 수정
- - style: 코드 포맷 변경, 세미콜론 누락, 코드 수정이 없는 경우
- - refactor: Refactoring production code
- - test: 테스트추가, 리펙토링 테스트(no production code change)
- - chore: 빌드 테스크 업데이트, 패키지 매니저 설정(no production code change)
-
 ```
+
+- 타입
+
+* feat: 새로운 기능
+* fix: 버그 수정
+* docs: 문서 수정
+* style: 코드 포맷 변경, 세미콜론 누락, 코드 수정이 없는 경우
+* refactor: Refactoring production code
+* test: 테스트추가, 리펙토링 테스트(no production code change)
+* chore: 빌드 테스크 업데이트, 패키지 매니저 설정(no production code change)
