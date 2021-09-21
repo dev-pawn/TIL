@@ -36,5 +36,5 @@ chore: 빌드 테스크 업데이트, 패키지 매니저 설정(no production c
 
 ## 참고 자료
 
-https://udacity.github.io/git-styleguide/
+https://udacity.github.io/git-styleguide/  
 https://me2.kr/lm0uo
