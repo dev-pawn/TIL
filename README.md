@@ -8,7 +8,12 @@
 
 - [들어가며](#들어가며)
 - [커밋메시지스타일가이드](#커밋메시지스타일가이드)
-
+    - 메세지 구조
+    - 타입
+    - 제목
+    - 본문
+    - 꼬리말
+- [참고자료](#참고자료)
 ## 들어가며
 
 본격적으로 깃허브를 사용하게 되면서 커밋 작성을 표준화된 스타일로 하기 위해 공부하게 되었다.
@@ -27,12 +32,12 @@ footer
 
 - ### 타입 (type)
 
-feat: 새로운 기능  
-fix: 버그 수정  
-style: 코드 포맷 변경, 세미콜론 누락, 코드 수정이 없는 경우  
-refactor: Refactoring production code  
-test: 테스트추가, 리펙토링 테스트(no production code change)  
-chore: 빌드 테스크 업데이트, 패키지 매니저 설정(no production code change)  
+    -feat: 새로운 기능  
+    -fix: 버그 수정  
+    -style: 코드 포맷 변경, 세미콜론 누락, 코드 수정이 없는 경우  
+    -refactor: Refactoring production code  
+    -test: 테스트추가, 리펙토링 테스트(no production code change)  
+    -chore: 빌드 테스크 업데이트, 패키지 매니저 설정(no production code change)  
 
 - ### 제목 (subject)
 
@@ -57,11 +62,11 @@ chore: 빌드 테스크 업데이트, 패키지 매니저 설정(no production c
   
 1. 유형: #이슈번호 형식으로 작성한다.  
 2. 이슈번호는 쉼표로 구분한다.  
-3. 이슈 트래커 유형은 다음 중 하나를 사용한다.
-+ Fixes: 이슈 수정 중 (미해결일경우)
-+ Resolves: 이슈를 해결했을 경우 사용
-- Ref: 참고할 이슈가 있을 때 사용
-- Related to: 해당 커밋에 관련된 이슈 번호(미해결일경우)
+3. 이슈 트래커 유형은 다음 중 하나를 사용한다.  
+    -Fixes: 이슈 수정 중 (미해결일경우)  
+    -Resolves: 이슈를 해결했을 경우 사용  
+    -Ref: 참고할 이슈가 있을 때 사용  
+    -Related to: 해당 커밋에 관련된 이슈 번호(미해결일경우)
 
 
 ## 참고 자료
