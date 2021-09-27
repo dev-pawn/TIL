@@ -6,7 +6,7 @@
 
 - [들어가며](#들어가며)
 - [Git 이란?](#Git-이란)
-- [Git 기초](#Git-기초)
+- [Git 기초](##-Git-기초)
 
 ## 들어가며
 
@@ -129,6 +129,56 @@ Repository에 있는 파일들은 Commited 상태,
 파일을 수정하고 Staging Area에 추가했다면 Staged상태,
 
 아직 Staging Area에 추가하지 않았다면 Modified 상태이다.
+
+
+
+## Git 저장소 만들기
+
+- 기존 디렉토리를 Git 저장소로 만들기
+
+프로젝트의 디렉토리로 이동한다.
+
+```
+$ cd /c/user/my_project
+```
+
+아래와 같은 명령을 실행한다.
+
+```
+$ git init
+```
+
+이 명령은 .git 이라는 하위 디렉토리를 만든다.
+
+.git 디렉토리에는 저장소에 필요한 뼈대파일이 들어 있다.
+
+이 명령만으로는 아직 프로젝트의 어떠한 파일도 관리하지 않는다.
+
+- 기존 저장소를 Clone 하기
+
+아래와 같은 명령으로 저장소를 Clone한다.
+
+```
+$ git clone <url>
+```
+
+예) libgit2 라이브러리 소스 코드를 Clone하려면 아래와 같이 실행한다.
+
+```
+$ git clone https://github.com/libgit2/libgit2
+```
+
+이 명령은 libgit2라는 디렉토리를 만들고 그 안에 .git 디렉토리를 만든다.
+
+그리고 저장소의 데이터를 모두 가져와서 자동으로 가장 최신버전을 Checkout 해놓는다.
+
+```
+$ git clone https://github.com/libgit2/libgit2 mylibgit
+```
+
+만약 위와 같이 명령어를 실행하면 디렉토리 이름을 mylibgit으로 소스코드를 Clone 할 수 있다.
+
+
 
 ## 참고 자료
 
