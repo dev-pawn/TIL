@@ -1,12 +1,21 @@
 # Git 기초
+# Git
 
 
 
 ## 목차
 
 - [들어가며](#들어가며)
-- [Git 이란?](#Git-이란)
-- [Git 기초](##-Git-기초)
+- [Git 이란?](#git-이란)
+- [Git 기초](#git-기초)
+- [Git 저장소 만들기](#git-저장소-만들기)
+- [수정하고 저장소에 저장하기](#수정하고-저장소에-저장하기)
+- [파일의 상태 확인하기](#파일의-상태-확인하기)
+- [READ ME 파일 만들기](#read-me-파일-만들기)
+- [파일을 새로 추적하기](#파일을-새로-추적하기)
+- [Modified 상태의 파일을 Stage 하기](#modified-상태의-파일을-stage-하기)
+- [Short Status](#short-status)
+- [Ignoring Files](#ignoring-files)
 
 ## 들어가며
 
@@ -180,6 +189,299 @@ $ git clone https://github.com/libgit2/libgit2 mylibgit
 
 
 
+## 수정하고 저장소에 저장하기
+
+파일의 라이프 사이클
+
+![파일의 라이프사이클](https://git-scm.com/book/en/v2/images/lifecycle.png)
+
+워킹 디렉토리의 모든 파일은 크게 Tracked, Untracked로 나눈다.
+
+Tracked 파일은 이미 스냅샷에 포함되어 있던 파일이다.
+
+Tracked 파일은 이미 Unmodified, Modified, Staged 상태 중 하나이다.
+
+Untracked 파일은 스냅샷에도 Staging Area에도 포함되지 않은 파일이다.
+
+처음 저장소를 Clone하면 모든 파일은 Tracked이면서 Unmodified 상태이다. 파일을 Checkout하고 나서 아무것도 수정하지 않았기 때문이다.
+
+마지막 커밋 이후 Unmodified 상태에서 어떤 파일을 수정하면 Git은 그 파일을 Modified 상태로 인식한다.
+
+Modified 파일을 Staged 상태로 만들고, Staged 상태의 파일을 Commit한다.
+
+
+
+## 파일의 상태 확인하기
+
+파일의 상태를 확인하기 위해선 아래와 같은 명령어를 실행한다.
+
+```
+$ git status
+```
+
+Clone한 후에 바로 이 명령을 실행하면 아래와 같은 메세지를 볼 수 있다.
+
+```
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+nothing to commit, working directory clean
+```
+
+위의 내용은 파일을 하나도 수정하지 않았다는 것을 말해준다.
+
+Tracked 파일들은 하나도 수정되 지않았다는 의미히다.
+
+Untracked 파일은 아직 없어서 목록에 나타나지 않는다.
+
+기본 브랜치가 master이기 때문에 현재 브랜치 이름이 'master'로 나온다.
+
+
+
+## READ ME 파일 만들기
+
+```
+$ echo 'My Project' > README
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+    README
+
+nothing added to commit but untracked files present (use "git add" to track)
+```
+
+`README` 파일은 Untracked files 부분에 속해 있는데 이것은 아직 `README`파일이 Untracked 상태라는 것을 말한다.
+
+Git은 Untracked 파일을 아직 스냅샷(커밋)에 넣어지지 않은 파일이라고 본다.
+
+파일이 Tracked 상태가 되기 전까지는 Git을 절대 그 파일을 커밋하지 않는다.
+
+
+
+## 파일을 새로 추적하기
+
+파일을 Tracked 상태로 바꾸기 위해선 아래와 같은 명령어를 사용한다.
+
+```
+$ git add
+```
+
+`README`파일을 추적해보자
+
+```
+$ git add README
+
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+    new file:   README
+```
+
+`git status`명령을 다시 실행하면 README 파일이 Tracked 상태이면서 커밋에 추가될 Staged 상태라는 것을 확인할 수 있다.
+
+```
+Changes to be committed:
+```
+
+에 들어있는 파일은 Staged 상태라는것을 의미한다.
+
+Commit 하면 `git add`를 실행한 시점이 파일이 Commit 되어 저장소 히스토리에 남는다.
+
+`git add`명령은 파일 또는 디렉토리의 경로를 인수 값으로 받는다.
+
+디렉토리면 하위파일 모두를 재귀적으로 추가한다.
+
+
+
+## Modified 상태의 파일을 Stage 하기
+
+Modified 상태의 파일을 Staged 상태로 바꾸기 위해선 아래와 같은 명령어를 사용한다.
+
+```
+$ git add
+```
+
+이미 Tracked 상태인 파일을 수정하는 법을 알아보자. `CONTRIBUTING.md`라는 파일을 수정하고
+
+ `git status`명령을 다시 실행하면 결과는 아래와 같다.
+
+```
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+    new file:   README
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+    modified:   CONTRIBUTING.md
+```
+
+`CONTRIBUTING.md` 파일은 `Changes not staged for commit:` 에 있다.
+
+이것은 수정한 파일이 Tracked 상태이지만 아직 Staged 상태는 아니라는 것이다.
+
+Staged 상태로 만들기 위해선 `git add` 명령어를 사용해야한다.
+
+`git add`명령은 파일을 Tracked 할때도 사용하고 Modified 상태의 파일을 Staged 상태로 만들때도 사용한다.
+
+add의 의미는 프로젝트에 파일을 추가한다기보단 다음 Commit에 추가한다고 받아들이는게 좋다.
+
+ `git add` 명령을 사용하여 파일을 Staged 상태로 만들어보자.
+
+```
+$ git add CONTRIBUTING.md
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+    new file:   README
+    modified:   CONTRIBUTING.md
+```
+
+두 파일(README, CONTRIBUTING.md) 모두 Staged 상태이므로 다음 Commit에 포함된다.
+
+만약 이 상황에서 `CONTRIBUTING.md`파일을 열고 수정하게 된다면 어떻게 될까?
+
+```
+$ vim CONTRIBUTING.md
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+    new file:   README
+    modified:   CONTRIBUTING.md
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+    modified:   CONTRIBUTING.md
+```
+
+`CONTRIBUTING.md` 가 Staged 인 동시에 Unstaged 상태로 나온다.
+
+이런 일이 발생하는 이유는 `git add`명령을 실행하면 Git은 파일을 바로 Staged 상태로 만든다.
+
+이 시점에서 커밋을 하면 `git coomit`명령을 실행하는 순간의 버전이 Commit되는 것이 아니라
+
+`git add`명령을 실행했을때의 버전이 Commit된다.
+
+그러므로 `git add`명령을 실행한후에 파일을 수정했다면
+
+`git add`명령을 다시 실행하여 최신 버전을 Staged 상태로 만들어야한다.
+
+
+
+## Short Status
+
+`git status`명령으로 보여지는 내용을 좀 더 간단하게 보기 위해선 아래의 명령어를 사용한다.
+
+```
+$ git status -s
+```
+
+```
+$ git status -short
+```
+
+이 옵션은 현재 변경한 상태를 짤막하게 보여준다.
+
+```
+$ git status -s
+ M README
+MM Rakefile
+A  lib/git.rb
+M  lib/simplegit.rb
+?? LICENSE.txt
+```
+
+위 명령의 결과에서 상태정보 컬럼에는 두가지 정보를 보여준다.
+
+왼쪽에는 Staging Area의 상태를, 오른쪽에는 Working Tree에서의 상태를 표시한다.
+
+`README` 파일 같은 경우 내용을 변경했지만(Modified) 아직 Staged 상태로 추가하지는 않았다.
+
+`lib/simplegit.rb`파일은 내용을 변경하고(Modified) Staged 상태로 추가까지 한 상태이다.
+
+`Rakefile` 파일은 변경하고(Modified) Staged 상태로 추가한 후 또 내용을 변경해서(Modified)
+
+Staged이면서 Unstaged 상태인 파일이다.
+
+`lib/git.rb` 파일은 새로 생성한 파일을 Staged에 추가한 상태이다.
+
+Untracked 상태인 새 파일 앞에는 `??`표시가 붙는다.
+
+
+
+## Ignoring Files
+
+특정 파일은 Git이 관리할 필요가 없다.
+
+보통 로그파일이나 빌드 시스템이 자동으로 생성한 파일이 해당된다.
+
+그런 파일들을 무시하려면 `.gitignore` 파일을 만들고 그 안에 무시할 파일 패턴을 작성한다.
+
+작성 예시
+
+```
+$ cat .gitignore
+*.[oa]
+*~
+```
+
+첫번째 라인은 확장자가 `.o`나 `.a`인 파일을 Git이 무시하라는 것이고
+
+두번째 라인은 `~`로 끝나는 모든 파일을 무시하라는 것이다.
+
+작성 규칙
+
+- 아무것도 없는 라인이나, \`#`으로 시작하는 라인은 무시한다.
+- 표준 Glob 패턴을 사용한다. 이는 프로젝트 전체에 적용된다.
+- 슬래시(/)로 시작하면 하위 디렉토리에 적용되지 않는다.
+- 디렉토리는 슬래시(/)를 끝에 사용하는 것으로 표현한다.
+- 느낌표(!)로 시작하는 패턴의 파일은 무시하지 않는다.
+
+작성 예시
+
+```
+# 확장자가 .a인 파일 무시
+*.a
+
+# 윗 라인에서 확장자가 .a인 파일은 무시하게 했지만 lib.a는 무시하지 않음
+!lib.a
+
+# 현재 디렉토리에 있는 TODO파일은 무시하고 subdir/TODO처럼 하위디렉토리에 있는 파일은 무시하지 않음
+/TODO
+
+# build/ 디렉토리에 있는 모든 파일은 무시
+build/
+
+# doc/notes.txt 파일은 무시하고 doc/server/arch.txt 파일은 무시하지 않음
+doc/*.txt
+
+# doc 디렉토리 아래의 모든 .pdf 파일을 무시
+doc/**/*.pdf
+```
+
+
+
 ## 참고 자료
 
 https://git-scm.com/book/ko/v2/%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0-Git-%EA%B8%B0%EC%B4%88
+
+Glob 패턴 : 
