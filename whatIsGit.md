@@ -1,4 +1,3 @@
-# Git 기초
 # Git
 
 
@@ -484,4 +483,4 @@ doc/**/*.pdf
 
 https://git-scm.com/book/ko/v2/%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0-Git-%EA%B8%B0%EC%B4%88
 
-Glob 패턴 : 
+Glob 패턴 : https://ko.wikipedia.org/wiki/%EA%B8%80%EB%A1%9C%EB%B8%8C_(%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D)
