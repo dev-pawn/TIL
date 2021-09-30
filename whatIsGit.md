@@ -479,6 +479,62 @@ doc/**/*.pdf
 
 
 
+## Staged와 Unstaged 상태의 변경 내용을 보기
+
+단순히 파일이 변경되었다는 사실이 아니라 어떤 내용이 변경되었는지 살펴 보려면
+
+아래와 같은 명령어를 사용한다.
+
+```
+$ git diff
+```
+
+일반적으로 우리는 'Modified 됐지만, 아직 Staged 파일이 아닌 것'' 과 '어떤 파일이 Staged 상태인지'가 궁금하기 때문에 ``git status`` 명령을 사용한다.
+
+더 자세한 내용을 보고 싶을 때는 ``git diff``명령을 사용하는데 Patch처럼 어떤 라인을 추가했고 삭제했는지 궁금할때 사용한다.
+
+``git diff`` 명령을 실행하면 Modified 했지만 아직 Staged 상태가 아닌 파일을 비교해 볼 수 있다.
+
+```
+$ git diff
+diff --git a/CONTRIBUTING.md b/CONTRIBUTING.md
+index 8ebb991..643e24f 100644
+--- a/CONTRIBUTING.md
++++ b/CONTRIBUTING.md
+@@ -65,7 +65,8 @@ branch directly, things can get messy.
+ Please include a nice description of your changes when you submit your PR;
+ if we have to read the whole diff to figure out why you're contributing
+ in the first place, you're less likely to get feedback and have your change
+-merged in.
++merged in. Also, split your changes into comprehensive chunks if your patch is
++longer than a dozen lines.
+
+ If you are starting to work on a particular area, feel free to submit a PR
+ that highlights your work in progress (and note in the PR title that it's
+```
+
+이 명령은 워킹 디렉토리에 있는 것과 Staging Area에 있는 것을 비교한다.
+즉 Modified  하고 아직 Stage하지 않는 것을 보여준다.
+
+만약 커밋하려고 Staging Area에 넣은 파일의 변경 부분을 보고 싶으면``git diff --staged``옵션을 사용한다.
+
+```
+$ git diff --staged
+diff --git a/README b/README
+new file mode 100644
+index 0000000..03902a1
+--- /dev/null
++++ b/README
+@@ -0,0 +1 @@
++My Project
+```
+
+*주의할점은 ``git diff`` 명령은 마지막 커밋후 Modified 된 것들을 전부 보여주지 않는다.
+
+``git diff``는 Unstaged 상태인 것들만 보여준다. 만약 Modified 한 파일을 모두 Staging Area에 넣었다면
+
+``git diff``명령은 아무것도 출력하지 않는다.
+
 ## 참고 자료
 
 https://git-scm.com/book/ko/v2/%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0-Git-%EA%B8%B0%EC%B4%88
