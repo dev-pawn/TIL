@@ -15,6 +15,11 @@
 - [Modified 상태의 파일을 Stage 하기](#modified-상태의-파일을-stage-하기)
 - [Short Status](#short-status)
 - [Ignoring Files](#ignoring-files)
+- [Staged와 Unstaged 상태의 변경 내용을 보기](#staged와-unstaged-상태의-변경-내용을-보기)
+- [변경사항 커밋하기](#변경사항-커밋하기)
+- [Skipping the Staging Area](#skipping-the-staging-area)
+- [파일 삭제하기](#파일-삭제하기)
+- [파일 이름 변경하기](#파일-이름-변경하기)
 
 ## 들어가며
 
@@ -535,8 +540,227 @@ index 0000000..03902a1
 
 ``git diff``명령은 아무것도 출력하지 않는다.
 
+## 변경사항 커밋하기
+
+변경사항을 커밋하기 위해선 아래와 같은 명령어를 사용한다.
+
+```
+$ git commit
+```
+
+Modified 한 것을 Commit 하기 위해 Staging Area에 정리 했다. Unstaged 파일은 Commit 되지 않는다는 것을
+
+기억해야 한다. Git은 생성이나 수정하고 나서 ``git add`` 명령으로 추가하지 않은 파일은 Commit하지 않는다.
+
+``git add``명령으로 추가하지 않은 파일은 여전히 Modified 상태로 남아 있다.
+
+Commit 하기 전에 ``git status``명령으로 모든 것이 Staged 상태인지 확인할 수 있다.
+
+``git commit``을 입력하게 되면 Git 설정에 저장된 편집기가 실행되고, 아래와 같은 텍스트가 자동으로 포함된다.
+
+편집기는 아래와 같은 내용을 표시한다.(아래 예제는 Vim 편집기)
+
+```
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Your branch is up-to-date with 'origin/master'.
+#
+# Changes to be committed:
+#	new file:   README
+#	modified:   CONTRIBUTING.md
+#
+~
+~
+~
+".git/COMMIT_EDITMSG" 9L, 283C
+```
+
+자동 생성되는 커밋 메시지의 첫 라인은 비어 있고 둘째 라인부터 ``git status`` 명령의 결과가 채워진다.
+
+내용을 저장하고 편집기를 종료하면 Git은 입력된 내용(#으로 시작하는 라인 제외)으로 새 Commit을 하나 완성한다.
+
+``git commit -m`` 옵션을 사용하면 메시지를 인라인으로 첨부할 수도 있다.
+
+```
+$ git commit -m "Story 182: Fix benchmarks for speed"
+[master 463dc4f] Story 182: Fix benchmarks for speed
+ 2 files changed, 2 insertions(+)
+ create mode 100644 README
+```
+
+``commit``명령은 몇 가지 정보를 출력하는데 위 예제는 ``(master)`` branch에 Commit 했고 체크섬은 ``(463dc4f)`` 라고 알려준다. 그리고 수정한 파일이 몇개인지, 삭제되거나 추가된 라인이 몇 라인인지 알려준다.
+
+## Skipping the Staging Area
+
+``git commit`` 명령을 실행할 때 ``-a`` 옵션을 추가하면 Git은 Tracked 상태의 파일을 자동으로 Staging Area에 넣는다.
+
+```
+$ git commit -a
+```
+
+Staging Area는 Commit 할 파일을 정리한다는 점에서 매우 유용하지만 복잡하기만 하고 필요하지 않는 때도 있다.
+
+```
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+    modified:   CONTRIBUTING.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+$ git commit -a -m 'added new benchmarks'
+[master 83e38c7] added new benchmarks
+ 1 file changed, 5 insertions(+), 0 deletions(-)
+```
+
+위 예제에서는 ``git add``명령으로 ``CONTRIBUTING.md`` 파일을 추가하지 않았다는 점을 눈여겨보자
+
+``git commit -a`` 옵션을 사용하면 편리하긴 하지만 주의 깊게 사용해야 한다. 생각 없이 이 옵션을 사용하다 보면 추가하지 말아야 할 변경사항도 추가 될 수 있기 때문이다.
+
+
+
+## 파일 삭제하기
+
+Git에서 파일을 제거하려면 아래의 명령을 사용한다.
+
+```
+$ git rm
+```
+
+위 명령을 사용하여 Tracked 상태의 파일을 삭제한 후에(정확히는 Staging Area에서 삭제하는 것이다.)
+커밋해야 한다.
+
+이 명령은 워킹 디렉토리에 있는 파일도 삭제하기 때문에 실제 파일도 지워진다.
+
+Git 명령을 사용하지 않고 워킹 디렉토리에서 파일을 삭제하고 ``git status`` 명령으로 상태를 확인하면
+Git은 현재 ''Changes not staged for commit"(Unstaged상태)라고 표시해준다.
+
+```
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        deleted:    PROJECTS.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+
+이후 ``git rm`` 명령을 실행하면 삭제한 파일은 Staged 상태가 된다.
+
+```
+$ git rm PROJECTS.md
+rm 'PROJECTS.md'
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+    deleted:    PROJECTS.md
+```
+
+이후 Commit하면 파일은 삭제되고 Git은 PROJECTS.md 파일을 더이상 추적하지 않는다.
+
+만약 이미 파일은 Modified 했거나 Staging Area에 추가한 상태라면 ``-f`` 옵션을 주어 강제로 삭제해야한다.
+
+이것은 실수로 데이터를 삭제하지 못하도록 하는 안전장치이다. (Commit하지 않고 Modified 한 데이터는 Git으로 복구 할 수 없기 때문이다.)
+
+
+
+또 Staging Area 에서만 제거하고 워킹 디렉토리에 있는 파일은 지우지 않고 남겨 둘 수 있다.
+(하드디스크에 있는 파일은 그대로 두고 Git에서 추적하지 않게만 한다.)
+
+``.gitignore``파일에 추가하는 것을 잊었거나 대용량 로그파일이나 컴파일된 파일인 ``.a``파일 같은 것을 실수로 추가했을 때 쓴다.
+
+```
+$ git rm --cached README
+```
+
+
+
+파일, 디렉토리 및 파일 Glob패턴을 ``git rm`` 명령에 전달 할 수 있다.
+
+이 명령은 ``log/`` 디렉토리에 있는 ``.log`` 파일을 모두 삭제한다.
+
+```
+$ git rm log/\*.log
+```
+
+``*`` 앞에 ``\``를 사용한 것을 기억하자. 파일명 확장 기능은 쉘에만 있는 것이 아니라 Git 자체에도 있기 때문에 필요하다.
+
+아래의 예제처럼 할 수 도 있다.
+
+```
+$ git rm \*~
+```
+
+이 명령은 이름이 ~로 끝나는 파일을 모두 삭제한다.
+
+
+
+## 파일 이름 변경하기
+
+Git에서 파일 이름을 변경하려면 아래와 같은 명령을 사용한다.
+
+```
+$ git file_from file_to
+```
+
+
+
+Git은 다른 VCS 시스템과 달리 파일 이름의 변경이나 파일의 이동을 명시적으로 관리하지 않는다.
+
+다시 말해서 파일 이름이 변경되었다는 별도의 정보를 저장하지 않는다.
+
+Git은 영리해서 굳이 파일 이름이 변경되었다는 것을 추적하지 않아도 아는 방법이 있다.
+
+Git이 파일 이름의 변경을 어떻게 알아내는지 살펴보자.
+
+
+
+이렇게 말하고 Git 에 ``mv`` 명령이 있다는게 좀 이상하겠지만, 아래와 같이 파일명을 변경할 수 있다.
+
+```
+$ git mv README.md README
+```
+
+위 명령을 실행하고 ``git status``를 보면 Git은 이름이 바뀐 사실을 알고 있다.
+
+```
+$ git mv README.md README
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+    renamed:    README.md -> README
+```
+
+사실 ``git mv`` 명령은 아래 명령어를 수행한 것과 완전 동일하다.
+
+```
+$ mv README.md README
+$ git rm README.md
+$ git add README
+```
+
+``git mv``명령은 일종의 단축 명령어 이다. ``git mv``명령을 사용해서 파일이름을 바꿔도 되고
+``mv`` 명령으로 파일 이름을 직접 바꿔도 된다. 단지 ``git mv`` 명령은 세번의 명령을 한번에 실행시켜주는 것 뿐이다.
+
+어떤 도구로 파일명을 바꿔도 상관없다. 중요한 것은 파일명을 변경하고 나서 꼭 rm/add 명령을 실행해야 한다는 것 뿐이다.
+
+
+
 ## 참고 자료
 
-https://git-scm.com/book/ko/v2/%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0-Git-%EA%B8%B0%EC%B4%88
+Pro Git Book: https://git-scm.com/book/ko/v2/%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0-Git-%EA%B8%B0%EC%B4%88
 
 Glob 패턴 : https://ko.wikipedia.org/wiki/%EA%B8%80%EB%A1%9C%EB%B8%8C_(%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D)
