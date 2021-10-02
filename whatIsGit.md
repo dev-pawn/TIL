@@ -20,6 +20,8 @@
 - [Skipping the Staging Area](#skipping-the-staging-area)
 - [파일 삭제하기](#파일-삭제하기)
 - [파일 이름 변경하기](#파일-이름-변경하기)
+- [커밋 히스토리 조회하기](#커밋-히소토리-조회하기)
+- [Limiting Log Output](#limiting-log-output)
 
 ## 들어가며
 
@@ -203,7 +205,7 @@ $ git clone https://github.com/libgit2/libgit2 mylibgit
 
 Tracked 파일은 이미 스냅샷에 포함되어 있던 파일이다.
 
-Tracked 파일은 이미 Unmodified, Modified, Staged 상태 중 하나이다.
+Tracked 파일은 Unmodified, Modified, Staged 상태 중 하나이다.
 
 Untracked 파일은 스냅샷에도 Staging Area에도 포함되지 않은 파일이다.
 
@@ -802,6 +804,8 @@ Date:   Sat Mar 15 10:31:28 2008 -0700
 
 ``-p``는 각 커밋의 diff 결과를 보여준다. 다른 유용한 옵션으로 ``-2``가 있는데 최근 두개의 결과만 보여주는 옵션이다.
 
+``-<N>``으로 최근 N개의 결과를 조회 할 수도 있다.
+
 ```
 $ git log -p -2
 commit ca82a6dff817ec66f44342007202690a93763949
@@ -977,6 +981,86 @@ $ git log --pretty=format:"%h %s" --graph
 ```
 
 
+
+## Limiting Log Output
+
+``git log`` 명령은 조회 범위를 제한하는 옵션들도 있다.
+
+히스토리 전부가 아니라 부분만 조회한다.
+
+Git은 기본적으로 출력을 pager류의 프로그램을 거쳐서 내보내므로 한 번에 한 페이지씩 보여준다.
+
+``git log`` 조회 범위를 제한하는 옵션
+
+```
+옵션				설명
+-(n)				최근 n 개의 커밋만 조회한다.
+--since, --after	명시한 날짜 이후의 커밋만 검색한다.
+--until, --before	명시한 날짜 이전의 커밋만 조회한다.
+--author			입력한저자의 커밋만 보여준다.
+--committer			입력한 커미터의 커밋만 보여준다.
+--grep				커밋 메시지 안의 텍스트를 검색한다.
+-S					커밋 변경(추가/삭제) 내용 안의 텍스트를 검색한다.
+```
+
+``--since``나 ``--until``같은 시간을 기준으로 조회하는 옵션은 매우 유용하다.
+
+지난 2주동안 만들어진 Commit들만 조회하는 명령은 아래와 같다.
+
+```
+$git log --since=2.weeks
+```
+
+이 옵션은 다양한 형식을 지원한다.
+
+``2008-01-15`` 같이 정확한 날짜도 사용할 수 있고
+
+``2 year 1 day 3 minutes ago`` 같이 상대적인 기간을 사용할 수도 있다.
+
+또 다른 기준도 있다. ``--author`` 옵션으로 저자를 지정하여 검색할 수도 있고 ``--grep``옵션으로 커밋 메시지에서
+
+키워드르 검색할 수도 있다.
+
+*``author``와 ``--grep`` 옵션을 함께 사용하여 모두 만족하는 커밋을 찾으려면 ``--all-match``옵션도 반드시 함께 사용해야 한다.
+
+
+
+진짜 유용한 옵션으로 ``-S``가 있는데 이 옵션은 코드에서 추가되거나 제거된 내용 중에 특정 텍스트가 포함되어 있는지를 검색한다.
+
+예를 들어 어떤 함수가 추가되거나 제거된 커밋만들 찾아보려면 아래와 같은 명령을 사용한다.
+
+```
+$ git log -S function_name
+```
+
+
+
+마지막으로 파일 경로를 검색하는 옵션이 있는데 이것도 정말 유용하다. 디렉토리나 파일 이름을 사용하여 그 파일이 변경된 log의 결과를 검색할 수 있다.
+
+이 옵션은 ``--``와 함께 경로 이름을 사용하는데 명령어 끝 부분에 쓴다.
+
+```
+$ git log -- path/to/file
+```
+
+
+
+마지막 예제는 Merge Commit 을 제외한 순수한 Commit을 확인해보는 명령이다.
+
+```
+$ git log --pretty="%h - %s" --author=gitster --since="2008-10-01" \
+   --before="2008-11-01" --no-merges -- t/
+5610e3b - Fix testcase failure when extended attributes are in use
+acd3b9e - Enhance hold_lock_file_for_{update,append}() API
+f563754 - demonstrate breakage of detached checkout with symbolic link HEAD
+d1a43f2 - reset --hard/read-tree --reset -u: remove unmerged new paths
+51a94af - Fix "checkout --track -b newbranch" on detached HEAD
+b0ad11e - pull: allow "git pull origin $something:$current_branch" into an unborn branch
+```
+
+Junio Hamano가 2008년 10월에 Git 소스코드 저장소에서 테스트파일을 수정한 커밋들이다.
+
+총 4만여 개의 커밋 히스토리에서 이 명령의 검색 조건에 만족하는 것은 단 6개였다.
 
 ## 참고 자료
 
