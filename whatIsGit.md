@@ -22,6 +22,9 @@
 - [파일 이름 변경하기](#파일-이름-변경하기)
 - [커밋 히스토리 조회하기](#커밋-히소토리-조회하기)
 - [Limiting Log Output](#limiting-log-output)
+- [되돌리기(Undo)](#되돌리기(undo))
+- [파일 상태를 Unstage로 변경하기](#파일-상태를-unstage로-변경하기)
+- [Modified 파일 되돌리기](#modified-파일-되돌리기)
 
 ## 들어가며
 
@@ -1061,6 +1064,130 @@ b0ad11e - pull: allow "git pull origin $something:$current_branch" into an unbor
 Junio Hamano가 2008년 10월에 Git 소스코드 저장소에서 테스트파일을 수정한 커밋들이다.
 
 총 4만여 개의 커밋 히스토리에서 이 명령의 검색 조건에 만족하는 것은 단 6개였다.
+
+
+
+## 되돌리기(Undo)
+
+Git을 사용하면 일반적인 실수들은 다 복구 할 수 있지만 되돌리기(Undo) 한 것은 복구 할 수 없다.
+
+너무 일찍 Commit 했거나 특정 파일을 빼먹었을 때 그리고 Commit 메시지를 잘못 적었을 때 완료한 Commit을 수정해야 한다. 다시 Commit 하고 싶으면 파일 수정을 하고 Staging Area에 추가한 다음 ``--amend`` 옵션을 사용하여 Commit을 재작성 할 수 있다.
+
+```
+$ git commit --amend
+```
+
+이 명령은 Staging Area를 사용하여 Commit한다.
+
+만약 마지막으로 Commit하고 나서 수정한 것이 없다면 (=Commit이후 바로 이 명령을 실행할 경우)
+조금 전에 한 Commit과 모든 것이 같다.
+
+이땐 Commit 메시지만 수정된다.
+
+편집기가 실행 되면 이전 Commit 메시지가 자동으로 포함되는데, 메시지를 수정하지 않고 그대로 Commit해도 기존의 Commit을 덮어 쓴다.
+
+Stage 하는 것을 깜빡하고 빠트린 파일이 있으면 아래와 같이 고칠 수 있다.
+
+```
+$ git commit -m 'initial commit'
+$ git add forgotten_file
+$ git commit --amend
+```
+
+이 명령어 3개는 한개의 Commit으로 기록된다.
+
+*``--amend``옵션으로 Commit을 고치는 것은 이전의 Commit을 완전히 새로 고쳐서 새 Commit으로 변경하는 것을 의미한다. 이전의 Commit은 일어나지 않은 일이 되는 것이고 당연히 히스토리에도 남지 않는다.
+
+*``--amend`` 옵션으로 Commit 을 고치는 것은 마지막 작업에서 살짝 뭔가 빠뜨린 것을 넣거나 변경하는것 것을 하나의 Commit에서 처리하는 것이다. ``누락한 파일 추가`` , ``오타 수정`` 등의 Commit을 생성하지 않겠다는 말과 같다.
+
+
+
+## 파일 상태를 Unstage로 변경하기
+
+Staging Area와 워킹 디렉토리의 상태를 각각 확인할 때 마다
+변경된 상태를 되돌리는 법을 알려주기 때문에 매우 편리하다.
+
+밑의 예제는 수정된 두 개의 파일을 따로따로 Commit 하려고 했지만, 실수로 ``git add *`` 라고 실행해 버린 상황이다.
+
+두 파일 모두 Staging Area에 들어 있게 되었다. ``git status`` 명령으로 확인해보자.
+
+```
+$ git add *
+$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+    renamed:    README.md -> README
+    modified:   CONTRIBUTING.md
+```
+
+``Changes to be committed:`` 밑에 ``(use "git reset HEAD <file>..." to unstage)`` 메시지가 보인다.
+
+이 명령으로 Unstaged 상태로 변경 할 수 있다. ``CONTRIBUTING.md`` 파일을 Unstaged 상태로 변경해보자.
+
+```
+$ git reset HEAD CONTRIBUTING.md
+Unstaged changes after reset:
+M	CONTRIBUTING.md
+$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+    renamed:    README.md -> README
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+    modified:   CONTRIBUTING.md
+```
+
+*``git reset`` 명령을 매우 위험하다. ``--hard`` 옵션과 함께 사용하면 더 위험하다. 하지만 위의 예제 처럼 옵션 없이 사용하면 워킹 디렉토리의 파일은 건드리지 않는다.
+
+
+
+## Modified 파일 되돌리기
+
+파일을 수정하고 나서 최근 Commit된 버전이나 워킹 디렉토리에 처음 Checkout한 내용으로
+되돌리고 싶은 경우 아래의 명령을 사용한다.
+
+```
+$ git checkout -- <file>
+```
+
+``CONTRIBUTING.md`` 파일의 경우를 살펴보자.
+
+```
+$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+    renamed:    README.md -> README
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+    modified:   CONTRIBUTING.md
+```
+
+``(use "git checkout -- <file>..." to discard changes in working directory)`` 라인을 보면
+수정한 파일을 되돌리는 법을 알려준다. 그대로 실행해보자.
+
+```
+$ git checkout -- CONTRIBUTING.md
+$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+    renamed:    README.md -> README
+```
+
+*``git checkout --<file>`` 명령은 위험하다. 원본 파일로 덮어썼기 때문에 수정한 내용은 전부 사라진다.
 
 ## 참고 자료
 
