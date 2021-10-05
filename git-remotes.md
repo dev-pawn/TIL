@@ -6,18 +6,18 @@
 
 리모트 저장소를 관리한다는 것은 저장소를 추가, 삭제하는것 뿐만 아니라 브랜치를 관리하고 추적 여부를 관리하는 것을 말한다.
 
-*remote 저장소라도 같은 로컬 시스템 내에 존재 할 수도 있다. remote라는 이름은 반드시 저장소가 네트워크나 인터넷을 통해 멀리 떨어져있어야 한다는 것을 의미하지 않는다.
+_remote 저장소라도 같은 로컬 시스템 내에 존재 할 수도 있다. remote라는 이름은 반드시 저장소가 네트워크나 인터넷을 통해 멀리 떨어져있어야 한다는 것을 의미하지 않는다._
 
 
 
 ## 목차
 
 - [Showing Your Remotes](#showing-your-remotes)
-- [리모트 저장소 추가하기]
-- [리모트 저장소를 Pull 하거나 Fetch 하기]
-- [리모트 저장소에 Push 하기]
-- [Inspecting a Remote]
-- [리모트 저장소 이름을 바꾸거나 리모트 저장소를 삭제하기]
+- [리모트 저장소 추가하기](#리모트-저장소-추가하기)
+- [리모트 저장소를 Pull 하거나 Fetch 하기](#리모트-저장소를-pull-하거나-fetch-하기)
+- [리모트 저장소에 Push 하기](#리모트-저장소에-push-하기)
+- [Inspecting a Remote](#inspecting-a-remote)
+- [리모트 저장소 이름을 바꾸거나 리모트 저장소를 삭제하기](#리모트-저장소-이름을-바꾸거나-리모트-저장소를-삭제하기)
 
 
 
@@ -114,5 +114,122 @@ From https://github.com/paulboone/ticgit
 
 ## 리모트 저장소를 Pull 하거나 Fetch 하기
 
+```
+$ git fetch <remote>
+```
+
+이 명령은 로컬에는 없지만, 리모트 저장소에는 있는 데이터를 모두 가져온다.
+
+그렇게되면 리모트 저장소의 모든 브랜치를 로컬에서 접근할 수 있어서 언제든지 Merge를 하거나 내용을 살펴 볼 수 있다.
+
+저장소를 ``Clone``하면 명령은 자동으로 리모트 저장소를 ``origin`` 이라는 이름으로 추가한다.
+
+나중에 ``$ git fetch origin`` 명령을 실행하면 Clone 한 이후에(혹은 마지막으로 가져온 이후에) 수정된 것을 모두 가져온다.
+
+``git fetch`` 명령은 리모트 저장소의 데이터를 모두 로컬로 가져오지만, 자동으로 Merge 하지 않는다.
+그래서 당신이 로컬에서 하던 작업을 정리하고 수동으로 Merge 해야한다.
+
+간단하게 ``git pull`` 명령으로 리모트 저장소 브랜치에서 데이터를 가져올 뿐만 아니라 자동으로 브랜치와 Merge 시킬수 있다. 
+
+``git clone`` 명령은 자동으로 로컬의 master 브랜치가 리모트 저장소의 master 브랜치르 추적하도록 한다.
+
+``git pull`` 명령은 Clone 한 서버에서 데이터를 가져오고 그 데이터를 자동으로 현재 작업하는 코드와 Merge한다.
 
 
+
+## 리모트 저장소에 Push 하기
+
+```
+$ git push <리모트 저장소 이름> <브랜치 이름>
+```
+
+프로젝트를 공유하고 싶을 때 Upstream 저장소에 Push 할 수 있다.
+
+```
+$ git push origin master
+```
+
+위 명령은 master 브랜치를 origin 서버에 Push 한다.
+
+``push`` 명령은 Clone 한 리모트 저장소에 쓰기 권한이 있고, Clone 하고 난 이후 아무도 Upstream 저장소에 Push 하지 않았을 때만 사용할 수 있다. 다시 말해서 Clone 한 사람이 여러 명 있을 때, 다른 사람이 Push 한 이후 Push하려고 하면 Push 할 수 없다.
+
+먼저 다른 사람이 Push 한 것을 가져와서 Merge 한 다음에 다시 Push 할 수 있다.
+
+
+
+## Inspecting a Remote
+
+```
+$ git remote show <리모트 저장소 이름>
+```
+
+이 명령으로 리모트 저장소의 구체적인 정보를 확인 할 수 있다.
+
+```
+$ git remote show origin
+* remote origin
+  Fetch URL: https://github.com/schacon/ticgit
+  Push  URL: https://github.com/schacon/ticgit
+  HEAD branch: master
+  Remote branches:
+    master                               tracked
+    dev-branch                           tracked
+  Local branch configured for 'git pull':
+    master merges with remote master
+  Local ref configured for 'git push':
+    master pushes to master (up to date)
+```
+
+``origin`` 으로 실행하면 위에 같은 정보를 볼 수 있다.
+
+리모트 저장소의 URL과 추적하는 브랜치를 출력한다.
+
+이 명령은 ``git pull`` 명령을 실행할 때 master 브랜치와 Merge 할 브랜치가 무엇인지 보여준다.
+
+-> ``Local branch configured for 'git pull':    master merges with remote master``
+
+``git pull`` 명령은 리모트 저장소 브랜치의 데이터를 모두 가져오고 나서 Merge 할 것이다.
+
+그리고 가져온 모든 리모트 저장소 정보도 출력한다.
+
+
+
+## 리모트 저장소 이름을 바꾸거나 리모트 저장소를 삭제하기
+
+```
+$ git remote rename
+```
+
+만약 ``pb``를 ``paul``로 변경하고자 한다면 아래와 같이 한다.
+
+```
+$ git remote rename pb paul
+$ git remote
+origin
+paul
+```
+
+로컬에서 관리하던 리모트 저장소의 브랜치 이름도 바뀐다는 점을 기억하자.
+
+지금까지 ``pb/master`` 로 리모트 저장소 브랜치를 사용했으면
+
+이제는 ``paul/master`` 라고 사용해야 한다.
+
+
+
+```
+$ git remote remove
+$ gir remote rm
+```
+
+리모트 저장소를 삭제해야 한다면 ``remove`` 나 ``rm`` 명령을 사용한다.
+
+서버 정보가 바뀌었을 때, 더는 별도의 미러가 필요하지 않을 때, 더는 기여자가 활동하지 않을 때 필요하다.
+
+```
+$ git remote remove paul
+$ git remote
+origin
+```
+
+위와 같은 방법으로 리모트 저장소를 삭제하면 해당 리모트 저장소에 관련된 추적 브랜치 정보나 모든 설정 내용도 함께 삭제된다.
