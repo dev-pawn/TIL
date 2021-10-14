@@ -6,6 +6,7 @@
 
 - [들어가며](#들어가며)
 - [브랜치란 무엇인가](#브랜치란-무엇인가)
+- [새 브랜치 생성하기](#새-브랜치-생성하기)
 
 
 
@@ -29,5 +30,70 @@ Git의 브랜치는 매우 가볍다. 순식간에 브랜치를 새로 만들고
 
 ## 브랜치란 무엇인가
 
+Git이 데이터를 저장하는 방식을 알아야 브랜치를 다룰 수 있다.
 
+Git은 데이터를 일련의 스냅샷으로 기록한다는 것을 앞에서 보았다.
+
+Git은 Commit이 일어나는 경우 현 Staging Area에 있는 데이터의 스냅샷에 대한 포인터, 저자나 Commit 메시지 같은 메타 데이터, 이전 Commit에 대한 포인터 등을 포함하는 Commit Object를 저장한다.
+
+이전 Commit에 대한 포인터가 있어서 현재 Commit이 무엇을 기준으로 바뀌었는지를 알 수 있다.
+
+최초 Commit을 제외한 나머지 Commit은 이전 Commit에 대한 포인터가 적어도 하나씩은 있고
+브랜치를 합친 Merge Commit 같은 경우에는 이전 Commit 포인터가 여러개 있다.
+
+
+
+```
+$ git add README test.rb LICENSE
+$ git commit -m 'The initial commit of my project'
+```
+
+파일이 3개가 있는 디렉토리가 하나 있고 이 파일을 Staging Area에 저장하고 Commit하는 예제를 살펴보자
+
+파일을 Stage 하면 Git 저장소에서 파일을 저장하고(Git은 이것을 Blob이라 부른다)
+
+Staging Area에 해당 파일의 체크섬을 저장한다.(SHA-1을 사용)
+
+
+
+``git commit`` 으로 Commit하면 먼저 루트 디렉토리와 각 하위 디렉토리의 트리 개체를 체크섬과 함께 저장소에 저장한다.
+
+그 다음에 Commit Object를 만들고 메타데이터와 루트 디렉토리 트리 개체를 가리키는 포인터 정보를
+Commit Object에 넣어 저장한다.
+
+그래서 필요하면 언제든지 스냅샷을 다시 만들 수 있다.
+
+
+
+이 작업을 마치고 나면 Git 저장소에는 다섯 개의 데이터 개체가 생긴다.
+
+각 파일에 대한 Blob 세개,
+
+파일과 디렉토리 구조가 들어 있는 트리 개체 하나,
+
+메타데이터와 루트 트리를 가리키는 포인터가 담긴 Commit 개체 하나이다.
+
+![커밋과 트리 데이터](https://git-scm.com/book/en/v2/images/commit-and-tree.png)
+
+다시 파일을 수정하고 Commit하면 이전 Commit이 무엇인지도 저장한다.
+
+![Commit 과 이전 Commit](https://git-scm.com/book/en/v2/images/commits-and-parents.png)
+
+
+
+Git 브랜치는 Commit 사이를 가볍게 이동할 수 있는 어떤 포인터 같은 것이다.
+
+기본적으로 Git은 ``master`` 브랜치를 만든다. 처음 Commit하면 이 ``master`` 브랜치가 생성된 Commit을 가리킨다.
+
+이후 Commit을 만들면 ``master`` 브랜치는 자동으로 가장 마지막 Commit을 가리킨다.
+
+![브랜치와 Commit 히스토리](https://git-scm.com/book/en/v2/images/branch-and-history.png)
+
+_Git에서 ``master`` 브랜치는 특별하지 않다. 다른 브랜치와 차이점이 없다.
+모든 저장소에서 ``master`` 브랜치가 존재하는 이유는 ``git init`` 명령으로 초기화 할 때
+자동으로 생성된 이 브랜치를 굳이 다른 이름으로 변경하지 않기 때문이다._
+
+
+
+## 새 브랜치 생성하기
 
