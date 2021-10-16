@@ -129,3 +129,50 @@ f30ab (HEAD -> master, testing) add feature #32 - ability to add new formats to 
 ``git log`` 명령에 ``--decorate`` 옵션을 사용하면 쉽게 브랜치가 가리키는 Commit을 확인 할 수 있다.
 
 ``f30ab``라는 Commit옆에 ``master``와``testing`` 이라는 브랜치가 위치하고 있는것을 확인 할 수 있다.
+
+
+
+## 현재 작업 중인 브랜치를 가리키는 HEAD
+
+```
+$ git checkout testing
+```
+
+``git checkout`` 명령으로 다른 브랜치로 이동할 수 있다. 위 명령을 이용해 ``testing`` 브랜치로 이동해보자.
+
+이렇게 하면 ``HEAD`` 는 ``testing`` 브랜치를 가리킨다.
+
+![HEAD는 testing 브랜치를 가리킴](https://git-scm.com/book/en/v2/images/head-to-testing.png)
+
+자 이제 Commit을 한번 해보자.
+
+```
+$ vim test.rb
+$ git commit -a -m 'made a change'
+```
+
+![HEAD가 가리키는 testing 브랜치가 새 Commit을 가리킴](https://git-scm.com/book/en/v2/images/advance-testing.png)
+
+새로 Commit해서 ``testing`` 브랜치는 앞으로 이동했다.
+
+하지만, ``master`` 브랜치는 여전히 이전 Commit을 가리킨다.
+
+``master`` 브랜치로 되돌아가보자.
+
+```
+$ git checkout master
+```
+
+![HEAD가 Checkout한 브랜치로 이동함](https://git-scm.com/book/en/v2/images/checkout-master.png)
+
+위에서 실행한 명령이 한 일은 두가지이다.
+
+``master`` 브랜치가 가리키는 Commit을 HEAD가 가리키게 하고,
+워킹 디렉토리의 파일도 그 시점으로 되돌려 놓았다.
+
+앞으로 Commit을 하면 다른 브랜치의 작업들과 별개로 진행 되기 때문에
+``testing`` 브랜치에서 임시로 작업하고
+원래``master``브랜치로 돌아와서 하던 일을 계속 할 수 있다.
+
+_브랜치를 이동하면 워킹 디렉토리의 파일이 변경된다. 이전에 작업했던 브랜치로 이동하면 워킹 디렉토리의 파일은 그 브랜치에서 가장 마지막으로 했던 작업 내용으로 변경된다. 파일 변경시 문제가 있어 브랜치를 이동시키는게 불가능한 경우 Git은 브랜치 이동 명령을 수행하지 않는다._
+
