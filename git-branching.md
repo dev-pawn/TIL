@@ -7,6 +7,8 @@
 - [들어가며](#들어가며)
 - [브랜치란 무엇인가](#브랜치란-무엇인가)
 - [새 브랜치 생성하기](#새-브랜치-생성하기)
+- [브랜치 이동하기](#브랜치-이동하기)
+- [참고 자료](#참고-자료)
 
 
 
@@ -132,7 +134,7 @@ f30ab (HEAD -> master, testing) add feature #32 - ability to add new formats to 
 
 
 
-## 현재 작업 중인 브랜치를 가리키는 HEAD
+## 브랜치 이동하기
 
 ```
 $ git checkout testing
@@ -175,6 +177,51 @@ $ git checkout master
 원래``master``브랜치로 돌아와서 하던 일을 계속 할 수 있다.
 
 _브랜치를 이동하면 워킹 디렉토리의 파일이 변경된다. 이전에 작업했던 브랜치로 이동하면 워킹 디렉토리의 파일은 그 브랜치에서 가장 마지막으로 했던 작업 내용으로 변경된다. 파일 변경시 문제가 있어 브랜치를 이동시키는게 불가능한 경우 Git은 브랜치 이동 명령을 수행하지 않는다._
+
+
+
+파일을 수정하고 다시 Commit을 해보자.
+
+```
+$ vim test.rb
+$ git commit -a -m 'made other changes'
+```
+
+우리는 브랜치를 하나 만들어 그 브랜치에서 작업을 하고, 다시 원래 브랜치로 돌아와 다른 작업을 했다.
+
+두 작업내용은 서로 독립적으로 각 브랜치에 존재한다.
+
+Commit 사이를 자유롭게 이동하다가 때가 되면 두 브랜치를 Merge 한다.
+
+간단히 ``branch`` ,``checkout`` ,``commit`` 명령을 써서 말이다.
+
+![갈라지는 브랜치](https://git-scm.com/book/en/v2/images/advance-master.png)
+
+``git log`` 명령을 이용해 쉽게 확인할 수 있다.
+
+현재 브랜치가 가리키고 있는 히스토리가 무엇이고 어떻게 갈라져 나왔는지 보여준다.
+
+``git log --oneline --decorate --graph --all`` 이라고 실행하면 히스토리를 출력한다.
+
+```
+$ git log --oneline --decorate --graph --all
+* c2b9e (HEAD, master) made other changes
+| * 87ab2 (testing) made a change
+|/
+* f30ab add feature #32 - ability to add new formats to the
+* 34ac2 fixed bug #1328 - stack overflow under certain conditions
+* 98ca9 initial commit of my project
+```
+
+실제로 Git의 브랜치는 특정 Commit을 가리키는 40글자의 SHA-1 체크섬 파일에 불과하기 때문에
+
+만들기도 쉽고 지우기도 쉽다.
+
+새로 브랜치를 하나 만드는 것은 41바이트 크기의 파일을(40자의 SHA-1체크섬과 줄바꿈 문자) 하나 만드는 것에 불과하다.
+
+브랜치가 필요할 때 프로젝트 통째로 복사하는 다른 VCS와는 다르게 Git은 순식간이다.
+
+게다가 Commit을 할 때마다 이전 Commit의 정보를 저장하기 때문에 Merge를 할 때 어디서 부터 합쳐야 하는지 알 수 있다.
 
 
 
