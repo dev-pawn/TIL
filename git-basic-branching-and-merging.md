@@ -6,6 +6,7 @@
 
 - [Branch의 기초](#branch의-기초)
 - [Merge의 기초](#merge의-기초)
+- [충돌의 기초](#충돌의-기초)
 - [참고 자료](#참고-자료)
 
 
@@ -137,15 +138,57 @@ $ git commit -a -m 'finished the new footer [issue 53]'
 
 위에서 작업한 ``hofix`` 가 ``iss53`` 브랜치에 영향을 끼치치 않는다는 점을 이해하는 것이 중요하다.
 
-``git merge master`` 명령으로 ``master`` 브랜치를 ``iss53`` 브랜치에 ``Merge`` 하면
+``git merge master`` 명령으로 ``master`` 브랜치를 ``iss53`` 브랜치에 Merge하면
 ``iss53`` 브랜치에 ``hotfix``가 적용된다.
 
-아니면 ``iss53`` 브랜치가 ``master`` 에 ``Merge`` 할 수 있는 수준이 될 때까지 기다렸다가 ``Merge``하면
+아니면 ``iss53`` 브랜치가 ``master`` 에 Merge 할 수 있는 수준이 될 때까지 기다렸다가 Merge하면
 ``hotfix``와 ``iss53`` 브랜치가 합쳐진다.
 
 
 
 ## Merge의 기초
+
+``iss53`` 을 해결하고 ``master`` 브랜치에 Merge 하는 과정을 살펴보자.
+
+위 과정은 앞서 살펴본 ``hotfix`` 브랜치를 Merge 하는 과정과 비슷하다.
+
+``git merge`` 명령으로 합칠 브랜치에서 합쳐질 브랜치를 Merge 하면 된다.
+
+```
+$ git checkout master
+Switched to branch 'master'
+$ git merge iss53
+Merge made by the 'recursive' strategy.
+index.html |    1 +
+1 file changed, 1 insertion(+)
+```
+
+``hotfix``를 Merge 했을 때와 메시지가 다른것을 볼 수 있다.
+
+현재 브랜치가 가리키는 Commit이 Merge 할 브랜치의 조상이 아니므로 Git은 ``Fast-forward``로 Merge 하지 않는다.
+
+이 경우에는 Git은 각 브랜치가 가리키는 Commit 두개와 공통 조상 하나를 사용하여 ``3-way Merge``를 한다.
+
+![Commit 3 개를 Merge](https://git-scm.com/book/en/v2/images/basic-merging-1.png)
+
+단순히 브랜치 포인터를 최신 Commit으로 옮기는 것이 아니라
+``3-way Merge``의 결과를 별도의 Commit으로 만들고 나서 해당 브랜치가 그 Commit을 가리키도록 이동시킨다.
+
+그래서 이런 Commit은 부모가 여러 개고 Merge Commit이라고 부른다.
+
+![Merge Commit](https://git-scm.com/book/en/v2/images/basic-merging-2.png)
+
+``iss53`` 브랜치를 ``master``에 Merge 하고 나면 더는 ``iss53`` 브랜치가 필요 없다.
+
+다음 명령으로 브랜치를 삭제하고 이슈의 상태를 처리 완료로 표시한다.
+
+```
+$ git branch -d iss53
+```
+
+
+
+## 충돌의 기초
 
 
 
