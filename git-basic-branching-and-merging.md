@@ -6,7 +6,7 @@
 
 - [Branch의 기초](#branch의-기초)
 - [Merge의 기초](#merge의-기초)
-- [충돌의 기초](#충돌의-기초)
+- [Conflict의 기초](#conflict의-기초)
 - [참고 자료](#참고-자료)
 
 
@@ -188,9 +188,153 @@ $ git branch -d iss53
 
 
 
-## 충돌의 기초
+## Conflict의 기초
+
+``3-way Merge`` 가 실패할 때도 있다.
+
+Merge 하는 두 브랜치에서 같은 파일의 한 부분을 동시에 수정하고 Merge하면
+Git은 해당 부분을 Merge 하지 못한다.
+
+예를 들어, ``iss53`` 과 ``hotfix`` 가 같은 부분을 수정했다면 Git은 Merge 하지 못하고
+아래와 같은 충돌(Conflict) 메시지를 출력한다.
+
+```
+$ git merge iss53
+Auto-merging index.html
+CONFLICT (content): Merge conflict in index.html
+Automatic merge failed; fix conflicts and then commit the result.
+```
+
+Git은 자동으로 Merge 하지 못해서 새 Commit이 생기지 않는다.
+
+변경사항의 충돌을 개발자가 해결하지 않는 한 Merge 과정을 진행할 수 없다.
+
+Merge 충돌이 일어났을때 Git이 어떤 파일을 Merge 할 수 없었는지 살펴보려면 ``git status`` 명령을 실행한다.
+
+```
+$ git status
+On branch master
+You have unmerged paths.
+  (fix conflicts and run "git commit")
+
+Unmerged paths:
+  (use "git add <file>..." to mark resolution)
+
+    both modified:      index.html
+
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+
+충돌이 일어난 파일은 unmerged 상태로 표시된다.
+
+Git은 충돌이 난 부분을 표준 형식에 따라 표시해준다.
+
+그러면 개발자는 해당 부분을 수동으로 해결한다.
+
+충돌이 난 부분은 아래와 같이 표시된다.
+
+```
+<<<<<<< HEAD:index.html
+<div id="footer">contact : email.support@github.com</div>
+=======
+<div id="footer">
+ please contact us at support@github.com
+</div>
+>>>>>>> iss53:index.html
+```
+
+``=======`` 기준으로 위쪽의 내용은 ``HEAD`` 버전(merge 명령을 실행할 때 작업하던 ``master`` 브랜치)의 내용이고
+아래쪽의 내용은 ``iss53`` 브랜치의 내용이다.
+
+충돌을 해결하려면 위쪽이나 아래쪽 내용 중에서 고르거나 새로 작성하여 Merge 한다.
+
+아래는 아예 새로 작성하여 충돌을 해결하는 예시이다.
+
+```
+<div id="footer">
+please contact us at email.support@github.com
+</div>
+```
+
+충돌한 양쪽에서 조금씩 가져와서 새로 수정했다.
+
+그리고 ``<<<<<<<, =======, >>>>>>>`` 가 포함된 행을 삭제했다.
+
+이렇게 충돌한 부분을 해결하고 ``git add`` 명령으로 다시 Git에 저장한다.
 
 
+
+다른 Merge 도구도 충돌을 해결할 수 있다. ``git mergetool`` 명령으로 실행한다.
+
+```
+$ git mergetool
+
+This message is displayed because 'merge.tool' is not configured.
+See 'git mergetool --tool-help' or 'git help config' for more details.
+'git mergetool' will now attempt to use one of the following tools:
+opendiff kdiff3 tkdiff xxdiff meld tortoisemerge gvimdiff diffuse diffmerge ecmerge p4merge araxis bc3 codecompare vimdiff emerge
+Merging:
+index.html
+
+Normal merge conflict for 'index.html':
+  {local}: modified file
+  {remote}: modified file
+Hit return to start merge resolution tool (opendiff):
+```
+
+기본 도구 말고 사용할 수 있는 다른 Merge 도구도 있는데 (Mac에서는 ``opendiff`` 가 실행된다.)
+
+``one of the following tools.`` 부분에 보여준다.
+
+여기에 표시된 도구 중 하나를 고를 수 있다.
+
+Merge 도구를 종료하면 Git은 잘 Merge 했는지 물어본다.
+
+잘 마쳤다고 입력하면 자동으로 ``git add`` 가 수행되고 해당 파일이 Staging Area에 저장된다.
+
+``git status`` 명령으로 충돌이 해결된 상태인지 다시 한 번 확인해 볼 수 있다.
+
+```
+$ git status
+On branch master
+All conflicts fixed but you are still merging.
+  (use "git commit" to conclude merge)
+
+Changes to be committed:
+
+    modified:   index.html
+```
+
+충돌을 해결하고 나서 해당 파일이 Staging Area에 저장됐는지 확인했으면
+``git commit`` 명령으로 Merge 한 것을 Commit 한다.
+
+충돌을 해결하고 Merge 할 때는 Commit 메시지가 아래와 같다.
+
+```
+Merge branch 'iss53'
+
+Conflicts:
+    index.html
+#
+# It looks like you may be committing a merge.
+# If this is not correct, please remove the file
+#	.git/MERGE_HEAD
+# and try again.
+
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# All conflicts fixed but you are still merging.
+#
+# Changes to be committed:
+#	modified:   index.html
+#
+```
+
+어떻게 충돌을 해결했고 좀 더 확인해야 하는 부분은 무엇이고 왜 그렇게 해결했는지에 대해서 자세하게 기록한다.
+
+자세한 기록은 나중에 이 Merge Commit을 이해하는데 도움을 준다.
 
 ## 참고 자료
 
