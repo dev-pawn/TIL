@@ -14,6 +14,7 @@ Rebase가 무엇인지, 어떻게 사용하는지, 좋은 점은 무엇이고, �
 - [Rebase의 기초](#rebase의-기초)
 - [Rebase 활용](#rebase-활용)
 - [Rebase의 위험성](#rebase의-위험성)
+- [Rebase 한 것을 다시 Rebase 하기](#rebase-한-것을-다시-rebase-하기)
 
 
 
@@ -168,6 +169,72 @@ $ git branch -d server
 
 
 ## Rebase의 위험성
+
+__*이미 공개 저장소에 Push 한 Commit을 Rebase 하지 마라__
+
+이 지참만 지키면 Rebase를 하는데 문제 될 것이 없다.
+
+하지만 이 주의사항을 지키지 않으면 사람들에게 욕을 먹을 것이다.
+
+
+
+Rebase는 기존의 Commit을 그대로사용하는 것이 아니라 내용은 같지만 다른 Commit을 새로 만든다.
+
+새 Commit을 서버에 Push 하고 동료 중 누군가가 그 Commit을 Pull 해서 작업을 한다고 하자.
+
+그런데 그 Commit을 ``git rebase`` 로 바꿔서 Push 해버리면 동료가 다시 Push 했을 때 다시 Merge 해야 한다.
+
+그리고 동료가 다시 Merge 한 내용을 Pull 하면 내 코드는 정말 엉망이 된다.
+
+
+
+예제를 통해 Push한 Commit을 Rebase 하면 어떤 결과가 초래되는지 알아보자.
+
+중앙 저장소에서 Clone 하고 일부 수정을 하면 Commit 히스토리는 아래와 같아 진다.
+
+![저장소를 Clone하고 일부 수정함](https://git-scm.com/book/en/v2/images/perils-of-rebasing-1.png)
+
+
+
+이제 팀원 중 누군가 Commit, Merge 하고 나서 서버에 Push 한다.
+
+이 리모트 브랜치를 Fetch, Merge 하면 히스토리는 아래와 같이 된다.
+
+![Fetch 한 후 Merge 함](https://git-scm.com/book/en/v2/images/perils-of-rebasing-2.png)
+
+
+
+그런데 Push 했던 팀원은 Merge 한 일을 되돌리고 다시 Rebase 한다.
+
+서버의 히스토리를 새로 덮어씌우려면 ``git push --force`` 명령을 사용해야 한다.
+
+이후에 저장소에서 Fetch 하고 나면 아래 그림과 같은 상태가 된다.
+
+![한 팀원이 다른 팀원이 의존하는 Commit을 없애고 Rebase한 Commit을 다시 Push함](https://git-scm.com/book/en/v2/images/perils-of-rebasing-3.png)
+
+
+
+자 이렇게 되면 짬뽕이 된다.
+
+``git pull`` 로 서버의 내용을 가져와서 Merge 하면 같은 내용의 수정사항을 포함한 Merge Commit이 아래와 같이 만들어 진다.
+
+![같은 Merge를 다시 한다](https://git-scm.com/book/en/v2/images/perils-of-rebasing-4.png)
+
+
+
+``git log`` 로 히스토리를 확인해보면 저자, Commit날짜, 메시지가 같은 Commit이 두개 있따.(``C4`` , ``C4'``).
+
+이렇게 되면 혼란스럽다.
+
+게다가 이 히스토리를 서버에 Push 하면 같은 Commit이 두 개 있기 때문에 다른 사람들도 혼란스러워한다.
+
+``C4`` 와 ``C6`` 는 포함되지 말았어야 할 Commit이다.
+
+애초에 서버로 데이터를 보내기 전에 Rebase로 Commit을 정리했어야 했다.
+
+
+
+## Rebase 한 것을 다시 Rebase 하기
 
 
 
