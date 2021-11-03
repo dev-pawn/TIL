@@ -15,6 +15,8 @@ Rebase가 무엇인지, 어떻게 사용하는지, 좋은 점은 무엇이고, �
 - [Rebase 활용](#rebase-활용)
 - [Rebase의 위험성](#rebase의-위험성)
 - [Rebase 한 것을 다시 Rebase 하기](#rebase-한-것을-다시-rebase-하기)
+- [Rebase vs Merge](#rebase-vs-merge)
+- [참고 자료](#참고-자료)
 
 
 
@@ -235,6 +237,77 @@ Rebase는 기존의 Commit을 그대로사용하는 것이 아니라 내용은 �
 
 
 ## Rebase 한 것을 다시 Rebase 하기
+
+만약 위의 [Rebase의 위험성](#rebase의-위험성) 과 같은 상황에서 유용한 Git 기능이 있다.
+
+어떤 팀원이 내가 한 일을 덮어 썼다고 하자.
+
+그러면 내가 했던 일이 무엇이고 덮어쓴 내용이 무엇인지 알아내야 한다.
+
+
+
+Commit SHA 체크섬 외에도 Git은 Commit에 Patch 할 내용으로 SHA-1 체크섬을 한번 더 구한다.
+
+이 값은 "patch-id" 라고 한다.
+
+
+
+덮어쓴 Commit을 받아서 그 Commit을 기준으로 Rebase 할 때 Git은 원래 누가 작성한 코드인지 잘 찾아 낸다.
+
+그래서 Patch가 원래대로 잘 적용된다.
+
+
+
+예를 들어 앞서 살펴본 예제를 보면 
+
+![한 팀원이 다른 팀원이 의존하는 Commit을 없애고 Rebase한 Commit을 다시 Push함](https://git-scm.com/book/en/v2/images/perils-of-rebasing-3.png)
+
+위 상황에서 Merge 하는 대신 ``git rebase teamone/master`` 명령을 실행하면 Git은 아래와 같은 작업을 한다.
+
+- 현재 브랜치에만 포함된 Commit을 결정한다. (C2, C3, C4, C6, C7)
+- Merge Commit이 아닌 것을 결정한다. (C2, C3, C4)
+- 이 중 merge할 브랜치에 덮어쓰이지 않은 Commit을 결정한다. (C2, C3, C4는 C4'와 동일한 Patch다)
+- 결정한 Commit을 ``teamone/master`` 브랜치에 적용한다.
+
+
+
+결과를 확인해보면 
+
+![같은 Merge를 다시 한다](https://git-scm.com/book/en/v2/images/perils-of-rebasing-4.png)
+
+대신 아래와 같은 결과를 얻을 수 있다.
+
+![강제로 덮어쓴 블내치에 Rebase 하기](https://git-scm.com/book/en/v2/images/perils-of-rebasing-5.png)
+
+동료가 생성했던 C4와 C4' Commit 내용이 완전히 같을 때만 이렇게 동작된다.
+
+Commit 내용이 아예 다르거나 비슷하다면 Commit이 두 개 생긴다.(같은 내용이 두 번 Commit 될 수 있기 때문에 깔끔하지 않다.)
+
+``git pull`` 명령을 실행할 때 옵션을 붙여서 ``git pull --rebase`` 로 Rebase 할 수도 있다.
+
+물론 ``git fetch`` 와 ``git rebase teamone/master`` 이 두 명령을 직접 순서대로 실행해도 된다.
+
+
+
+``git pull`` 명령을 실행할 때 기본적으로 ``--rebase`` 옵션이 적용되도록 ``pull.rebase`` 설정을 추가할 수 있다.
+
+``git config --global pull.rebase true`` 명령으로 추가한다.
+
+
+
+Push 하기 전에 정리하려고 Rebase 하는 것은 괜찮다.
+
+또 절대 공개하지 않고 혼자 Rebase 하는 경우도 괜찮다.
+
+하지만, 이미 공개하여 사람들이 사용하는 Commit을 Rebase 하면 틀림없이 문제가 생긴다.
+
+나중에 후회하지 말고 ``git pull --rebase`` 로 문제를 미리 방지할 수 있다는 것을 같이 작업하는 동료와 모두 함께 공유하기 바란다.
+
+
+
+## Rebase vs Merge
+
+
 
 
 
