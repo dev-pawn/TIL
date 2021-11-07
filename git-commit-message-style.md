@@ -31,19 +31,19 @@ footer
 
 - ### 타입 (type)
 
-  -feat: 새로운 기능  
-   -Fix: 버그 수정  
-   -Style: 코드 포맷 변경, 세미콜론 누락, 코드 수정이 없는 경우  
-   -Refactor: Refactoring production code  
-   -Test: 테스트추가, 리펙토링 테스트(no production code change)  
-   -Chore: 빌드 테스크 업데이트, 패키지 매니저 설정(no production code change)  
-   -Design: CSS등 사용자 UI 디자인 변경  
-   -Docs: 문서를 수정한 경우  
-   -Rename: 파일 혹은 폴더명을 수정하거나 옮기는 작업만인 경우  
-   -Remove: 파일을 삭제하는 작업만 수행한 경우  
-   -!BREAKING CHANGE: 커다란 API 변경의 경우  
+  -feat: 새로운 기능 
+   -Fix: 버그 수정 
+   -Style: 코드 포맷 변경, 세미콜론 누락, 코드 수정이 없는 경우 
+   -Refactor: Refactoring production code 
+   -Test: 테스트추가, 리펙토링 테스트(no production code change) 
+   -Chore: 빌드 테스크 업데이트, 패키지 매니저 설정(no production code change) 
+   -Design: CSS등 사용자 UI 디자인 변경 
+   -Docs: 문서를 수정한 경우 
+   -Rename: 파일 혹은 폴더명을 수정하거나 옮기는 작업만인 경우 
+   -Remove: 파일을 삭제하는 작업만 수행한 경우 
+   -!BREAKING CHANGE: 커다란 API 변경의 경우 
    -!HOTFIX: 급하게 치명적인 버그를 고쳐야하는 경우  
-   
+  
 - ### 제목 (subject)
 
 1. 50자이내로 작성해야한다.
