@@ -75,5 +75,7 @@ footer
 
 ## 참고 자료
 
-https://udacity.github.io/git-styleguide/  
+https://udacity.github.io/git-styleguide/ 
 https://me2.kr/lm0uo
+
+https://blog.ull.im/engineering/2019/03/10/logs-on-git.html
