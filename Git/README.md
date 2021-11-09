@@ -8,5 +8,7 @@
 
 ## 목차
 
-- [태스트](./git-basic-branching-and-merging.md)
+- [Git의 기초](./git-whatisgit.md)
+- [브랜치란 무엇인가](./git-branching.md)
+- [브랜치와 Merge의 기초](./git-basic-branching-and-merging.md)
 
