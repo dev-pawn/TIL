@@ -30,7 +30,7 @@
 ### 관계 대수와 SQL
 
 - [관계 대수](./4-1.md)
-- SQL 개요
+- [SQL 개요](./4-2.md)
 - 데이터 정의어와 무결성 제약조건
 - SELECT문
 - INSERT, DELETE, UPDATE문
