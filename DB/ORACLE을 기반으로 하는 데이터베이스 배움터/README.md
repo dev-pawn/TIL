@@ -32,7 +32,7 @@
 - [관계 대수](./4-1.md)
 - [SQL 개요](./4-2.md)
 - [데이터 정의어와 무결성 제약조건](./4-3.md)
-- SELECT문
+- [SELECT문](./4-4.md)
 - INSERT, DELETE, UPDATE문
 - 트리거(trigger)와 주장(assertion)
 - 내포된 SQL
