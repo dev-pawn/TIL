@@ -33,7 +33,7 @@
 - [SQL 개요](./4-2.md)
 - [데이터 정의어와 무결성 제약조건](./4-3.md)
 - [SELECT문](./4-4.md)
-- INSERT, DELETE, UPDATE문
+- [INSERT, DELETE, UPDATE문](./4-5.md)
 - 트리거(trigger)와 주장(assertion)
 - 내포된 SQL
 
