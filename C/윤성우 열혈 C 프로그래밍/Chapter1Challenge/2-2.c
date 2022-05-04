@@ -2,8 +2,8 @@
 
 int main(void) {
 
-	printf("È«±æµ¿\n");
-	printf("´ëÇÑ¹Î±¹ ¼­¿ï\n");
+	printf("í™ê¸¸ë™\n");
+	printf("ëŒ€í•œë¯¼êµ­ ì„œìš¸\n");
 	printf("010-1234-5678\n");
 	return 0;
 
