@@ -8,11 +8,11 @@
 
 1. Part 01 C언어의 기본
 
-   - Chapter 01 이것이 C언어다.
+   - [Chapter 01 이것이 C언어다.](./1-1.md)
 
-   - Chapter 02 프로그램의 기본구성
+   - [Chapter 02 프로그램의 기본구성](./1-2.md)
 
-   - Chapter 03 변수와 연산자
+   - [Chapter 03 변수와 연산자](./1-3.md)
 
    - Chapter 04 데이터 표현방식의 이해
 
