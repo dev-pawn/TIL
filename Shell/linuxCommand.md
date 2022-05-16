@@ -6,3 +6,8 @@
 
 ## 목차
 
+- pwd
+- cat
+- patch
+- ls
+- 
