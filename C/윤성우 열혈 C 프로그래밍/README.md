@@ -16,7 +16,7 @@
 
    - [Chapter 04 데이터 표현방식의 이해](./1-4.md)
 
-   - Chapter 05 상수와 기본 자료형
+   - [Chapter 05 상수와 기본 자료형](./1-5.md)
 
    - Chapter 06 printf 함수와 scanf 함수 정리하기
 
