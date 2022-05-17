@@ -10,4 +10,12 @@
 - cat
 - patch
 - ls
-- 
+- find
+
+
+
+## find
+
+- 형식
+
+  find 
