@@ -18,7 +18,7 @@
 
    - [Chapter 05 상수와 기본 자료형](./1-5.md)
 
-   - Chapter 06 printf 함수와 scanf 함수 정리하기
+   - [Chapter 06 printf 함수와 scanf 함수 정리하기](./1-6.md)
 
    - Chapter 07 반복실행을 명령하는 반복문
 
