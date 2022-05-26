@@ -20,11 +20,11 @@
 
    - [Chapter 06 printf 함수와 scanf 함수 정리하기](./1-6.md)
 
-   - Chapter 07 반복실행을 명령하는 반복문
+   - [Chapter 07 반복실행을 명령하는 반복문](./1-7.md)
 
-   - Chapter 08 조건에 따른 흐름의 분기
+   - [Chapter 08 조건에 따른 흐름의 분기](./1-8.md)
 
-   - Chapter 09 C언어의 핵심! 함수!
+   - [Chapter 09 C언어의 핵심! 함수!](./1-9.md)
 
    - Chapter 10 도전! 프로그래밍1
 
