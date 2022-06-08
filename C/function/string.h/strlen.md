@@ -1,5 +1,4 @@
-| 헤더 파일 | c : string.h
-c++ : cstring |
+| 헤더 파일 | c : string.h c++ : cstring |
 | --- | --- |
 | 함수원형 | size_t strlen(const char *str) |
 
