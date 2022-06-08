@@ -1,6 +1,9 @@
+# strlen.c
+
 | 헤더 파일 | c : string.h c++ : cstring |
 | --- | --- |
 | 함수원형 | size_t strlen(const char *str) |
+
 
 const char 타입의 문자열을 받아서 해당 문자열의 길이를 반환하는 함수
 
