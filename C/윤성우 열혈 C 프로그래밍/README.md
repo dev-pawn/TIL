@@ -46,11 +46,11 @@
 
 3. Part 03 포인터와 배열의 완성
 
-   - Chapter 16 다차원 배열
+   - [Chapter 16 다차원 배열](./3-1.md)
 
-   - Chapter 17 포인터의 포인터
+   - [Chapter 17 포인터의 포인터](./3-2.md)
 
-   - Chapter 18 다차원 배열과 포인터의 관계
+   - [Chapter 18 다차원 배열과 포인터의 관계](./3-3.md)
 
    - Chapter 19 함수 포인터와 void 포인터
 
