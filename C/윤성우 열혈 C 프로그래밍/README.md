@@ -52,7 +52,7 @@
 
    - [Chapter 18 다차원 배열과 포인터의 관계](./3-3.md)
 
-   - Chapter 19 함수 포인터와 void 포인터
+   - [Chapter 19 함수 포인터와 void 포인터](./3-4.md)
 
    - Chapter 20 도전! 프로그래밍3
 
