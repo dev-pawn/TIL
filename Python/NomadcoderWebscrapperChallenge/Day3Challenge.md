@@ -60,3 +60,8 @@ final_tax_amount = tax_amount - apply_tax_credits(tax_amount, tax_credits)
 print(f"Your tax bill is: ${final_tax_amount}")
 ```
 
+
+
+## 코드 작성
+
+[Day3Challenge](./Day3Challenge.py)
