@@ -20,3 +20,33 @@
 
 - Use `if/elif`
 - Use `while`
+
+
+
+## 챌린지 템플릿
+
+```python
+playing = True
+
+
+a = int(input("Choose a number:\n"))
+b = int(input("Choose another one:\n"))
+operation = input("Choose an operation:\n    Options are: + , - , * or /.\n    Write 'exit' to finish.\n")
+  
+# add your code here!
+```
+
+
+
+## 챌린지 요구사항 정리
+
+- Choose a number: 를 프린트 한 뒤 첫 번째 숫자를 받음
+- Choose another one: 를 프린트 한 뒤 두 번째 숫자를 받음
+- Choose an operation: 를 프린트 한 뒤 연산자를 받음
+  - 연산자가 아닌 exit를 입력할 경우 프로그램 종료
+
+
+
+## 코드 작성
+
+[Day4Challenge](./Day4Challenge.py)
