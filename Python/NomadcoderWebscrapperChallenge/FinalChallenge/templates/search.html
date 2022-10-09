@@ -12,10 +12,7 @@
   </head>
   <body>
     <main class="container">
-      <hgroup>
         <h1>Search Results for "{{keyword}}"</h1>
-        <a href="/">Back to main page</a>
-      </hgroup>
       <figure>
         <table role="grid">
           <thead>
@@ -33,13 +30,14 @@
               <td>{{job.company}}</td>
               <td>{{job.location}}</td>
               <td>
-                <a href="{{job.link}}" target="_blank">Apply now &rarr;</a>
+                <a href="{{job.link}}" target="_blank">Apply now!! &rarr;</a>
               </td>
             </tr>
             {% endfor %}
           </tbody>
         </table>
       </figure>
+      <a href="/">Back to main page</a>
     </main>
   </body>
 </html>
