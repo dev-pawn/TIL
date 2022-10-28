@@ -68,11 +68,11 @@
 
    - [Chapter 24 파일 입출력](./4-4.md)
 
-   - Chapter 25 메모리 관리와 메모리의 동적 할당
+   - [Chapter 25 메모리 관리와 메모리의 동적 할당](./4-5.md)
 
-   - Chapter 26 매크로와 선형처리기(Preprocessor)
+   - [Chapter 26 매크로와 선형처리기(Preprocessor)](./4-6.md)
 
-   - Chapter 27 파일의 분할과 헤더파일의 디자인
+   - [Chapter 27 파일의 분할과 헤더파일의 디자인](./4-7.md)
 
    - Chapter 28 도전! 프로그래밍4
 
