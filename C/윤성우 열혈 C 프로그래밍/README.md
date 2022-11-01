@@ -82,4 +82,4 @@
 
    - Appendix-A 아스키 코드 표
    - Appendix-B 수학관련 함수들
-   - Appendix-C 가변인자 함수에 대한 이해
+   - [Appendix-C 가변인자 함수에 대한 이해](appendix-c-가변인자-함수에-대한-이해)
