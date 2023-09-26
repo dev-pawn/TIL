@@ -1,0 +1,114 @@
+.hidden {
+    display: none;
+}
+
+img {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    z-index: -1;
+    opacity: 80%;
+}
+
+button {
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-bottom: none;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.center-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+#clock {
+    font-size: 90px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 10px;
+    margin-bottom: 0px;
+    display: inline;
+}
+
+#greeting {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+#login-form input {
+    width: 300px;
+    height: 50px;
+    font-size: 30px;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-bottom: 3px solid rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 0);
+    outline: none;
+    text-align: center;
+}
+
+#login-form input::placeholder {
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+#todo-form input {
+    width: 200px;
+    height: 50px;
+    font-size: 30px;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-bottom: 3px solid rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 0);
+    outline: none;
+    text-align: center;
+}
+#todo-form input::placeholder {
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.6); 
+}
+
+#todo-list {
+    width: 300px;
+    text-align: left;
+    padding-left: 0px;
+}
+
+#todo-list li {
+    font-size: 30px;
+    color: rgba(255, 255, 255, 0.9);
+    list-style-type: none;
+}
+#quote {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.5);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+#weather span {
+    font-size: 50px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+#user-section {
+    display: flex;
+    width: 400px;
+    justify-content: space-around;
+}
