@@ -9,17 +9,11 @@ import java.util.Scanner;
 public class Ex12_1 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        int result = 0;
         int temp = 0;
         System.out.print("연산>>");
         int operand1 = scanner.nextInt();
         String operator = scanner.next();
         int operand2 = scanner.nextInt();
-        if (operand2 > operand1) {
-            temp = operand1;
-            operand1 = operand2;
-            operand2 = temp;
-        }
 
         if (operator.equals("+")) {
             System.out.println(operand1 + operator + operand2 + "의 계산 결과는 " + (operand1 + operand2));
@@ -31,7 +25,13 @@ public class Ex12_1 {
             if (operand1 == 0 || operand2 == 0) {
                 System.out.println("0으로 나눌 수 없습니다.");
             } else {
-                System.out.println(operand1 + operator + operand2 + "의 계산 결과는 " + (operand1/operand2));
+                System.out.print(operand1 + operator +operand2 + "의 계산 결과는 ");
+                if (operand2 > operand1) {
+                    temp = operand1;
+                    operand1 = operand2;
+                    operand2 = temp;
+                }
+                System.out.println(operand1 / operand2);
             }
         } else {
             System.out.println(" ERROR : 잘못된 연산자 입력");
