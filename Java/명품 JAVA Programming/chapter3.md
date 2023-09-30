@@ -269,3 +269,52 @@ for(sum=0, n=0; n<10; n++)
   ![](./img/chapter3/ex7.jpg)
 
   
+
+> 배열 인덱스와 배열 원소 접근
+
+배열의 인덱스는 정수만 가능하다. 인덱스는 0부터 시작하며 마지막 원소의 인덱스는 (배열 크기 -1)이다.  
+배열의 원소를 접근하려면 반드시 배열이 생성(공간 할당)되어 있어야 한다. 배열이 생성되어 있지 않는 상태에서 배열을 사용하면 배열이 초기화가 되지 않았따는 컴파일 오류가 발생하거나, 실행시간 오류가 발생한다.
+
+
+
+> 레퍼런스 치환과 배열 공유
+
+자바에서는 레퍼런스 변수와 배열 공간이 분리되어 있기 때문에, 다수의 레퍼런스 변수가 하나의 배열 공간을 가리키는 배열 공유가 쉽게 이루어진다.  
+다음 코드와 함께 아래 그림을 보면서 배열이 공유되는 것을 알아보자.
+
+```java
+int intArray[] = new int[5];
+int myArray[] = intArray;		// 레퍼런스 치환. myArray는 intArray와 동일한 배열 참조
+```
+
+앞의 코드에서 두 번째 라인은 레퍼런스 변수 myArray를 생성하고 intArray 변수의 값을 myArray에 치환하는 코드이다.  
+이 치환으로 intArray 배열이 복사되는 것이 아니라, 레퍼런스 즉 배열에 대한 주소만 복사된다.  
+그 결과 myArray는 intArray와 동일한 레퍼런스 값을 가지게 되어  myArray는  intArray의 배열을 공유하게 되고, myArray로  intArray의 배열 원소를 마음대로 접근할 수 있다.
+
+아래 그림의 윗부분은 intArray가 참조하는 배열을 myArray도 참조하고 있음을 보여준다. intArray와 myArray가 같은 배열을 참조하고 있기 때문에, 그림의 아랫부분의 myArray[1]=6;에 의해 먼저 기록된 값 2가 6으로 변경되는 것을 보여준다.
+
+![](./img/chapter3/ex8.jpg)
+
+- 배열의 크기, length 필드
+
+  자바는 배열을 객체로 다룬다. 배열이 생성되면 아래 그림과 같이 객체가 생성된다. 이 객체에는 배열의 저장 공간과 함께 배열의 크기 값을 가진 length 필드가 존재한다.
+
+  ![](./img/chapter3/ex9.jpg)
+
+  length 필드를 이용하면 배열의 크기를 다음과 같이 간단히 알아낼 수 있다.
+
+  ```java
+  int intArray [] = new int[5];
+  int size = intArray.length;		// size는 5
+  ```
+
+  배열 객체에  length 필드가 있기 때문에, 프로그램에서 배열의 크기를 따로 관리할 필요가 없다. 배열의 크기만큼 반복할 때  length 필드는 매우 유용하다. 다음은 intArray 배열의 모든 값을 출력하는 코드이다.
+
+  ```java
+  for(int i=0; i<intArray.length; i++)		// intArray 배열 크기(5)만큼 반복한다.
+  	System.out.println(intArray[i]);
+  ```
+
+- 배열의 for-each 문
+
+  
