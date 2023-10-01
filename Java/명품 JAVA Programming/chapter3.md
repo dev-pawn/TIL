@@ -317,4 +317,42 @@ int myArray[] = intArray;		// 레퍼런스 치환. myArray는 intArray와 동일
 
 - 배열의 for-each 문
 
-  
+  기존의  for 문을 변형하여, 배열이나 나열(enumeration)의 크기만큼 루프를 돌면서 각 원소를 순차적으로 접근하는데 유용하게 만든 for 문을 for-each 문(오라클에서는  advanced for라고 부름)이라고 부르며, 구조는 아래 그림과 같다.
+
+  ![](./img/chapter3/ex10.jpg)
+
+  배열  n에 들어 있는 모든 정수를 더하는 코드를  for-each 문으로 작성하면 다음과 같다.
+
+  ```java
+  int [] n = { 1,2,3,4,5 };
+  int sum = 0;
+  for (int k : n) { // n.length번 반복. k는 n[0], ..., n[4]로 번갈아 반복
+  	sum += k;
+  }
+  System.out.println("합은" + sum);
+  ```
+
+  앞의 for-each 문은  k=n[0], n[1], n[2], n[3], n[4] 값으로 바꾸면서, 배열  n의 크기만큼 반복한다. 그러므로 sum의 결과는  15가 된다.  
+  또 다른 예를 들어보자. 문자열 배열에 있는 모든 문자열을 for-each 문으로 출력하는 코드와 실행 결과는 다음과 같다.
+
+  ```java
+  String name[] = { "사과", "배", "바나나", "체리", "딸기", "포도"} ;
+  for (String s : names) { // 반복할 때마다 s는 names[0], ..., names[5]로 설정
+  	System.out.print(s + " ";)
+  }
+  ```
+
+  배열뿐만 아니라 나열 타입(enum)에 대해서도 다음과 같이 for-each 문이 사용된다.
+
+  ```java
+  enum week = {월, 화, 수, 목, 금, 토, 일}
+  for (Week day : Week.values()) // 반복될 때마다 day는 월, 화, 수, 목, 금, 토, 일로 설정
+  	System.out.print(day + "요일");
+  ```
+
+  앞의 코드는 enum 타입 Week를 선언한다. Week 타입은 월, 화, 수, 목, 금, 토, 일의 7개의 값 중 하나만 가지도록 선언되었기 때문에,  Week 타입의 객체 day는 이 7개의 값외 다른 값을 가질 수 없다.
+
+
+
+> 다차원 배열
+
