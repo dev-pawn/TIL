@@ -354,5 +354,43 @@ int myArray[] = intArray;		// 레퍼런스 치환. myArray는 intArray와 동일
 
 
 
-> 다차원 배열
+## 다차원 배열
 
+자바의 다차원 배열은 C/C++와 달리 독특한 구조를 가지기 때문에 주의하여 학습하기 바란다.
+
+
+
+> 2차원 배열
+
+- 2차원 배열의 선언과 생성
+
+  1차원 배열과 마찬가지로 2차원 배열에서도 레퍼런스 변수 선언 후 배열을 생성한다.  
+  2차원 배열의 레퍼런스 변수를 선언하는 방법은 다음 두 가지가 있다.
+
+  ```java
+  int intArray [][];
+  char charArray [][];
+  double doubleArray [][];
+  ```
+
+  또는
+
+  ```java
+  int [][] intArray;
+  char [][] charArray;
+  double [][] doubleArray;
+  ```
+
+  이제, 2차원 배열의 저장 공간은 다음과 같이  new 연산자를 이용하여 생성하며, 첫 번째 []는 행의 개수를, 두 번째 []는 열의 개수를 나타낸다.
+
+  ```java
+  intArray = new int [2][5];					// 2행 5열의 2차원 배열 생성
+  charArray = new char [5][5];				// 5행 5열의 2차원 배열 생성
+  doubleArray = new double [5][2];		// 5행 2열의 2차원 배열 생성
+  ```
+
+  아래 그림은 new int ``[2][5]``에 의해 생성된  2 * 5의 2차원 배열 구조를 보여준다. 2차원 배열에서는 행의 각 원소는 1차원 배열에 대한 레퍼런스가 된다.
+
+  ![](./img/chapter3/ex11.jpg)
+
+  
