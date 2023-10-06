@@ -591,3 +591,52 @@ public class Calc {
 
 ## 자바의 예외 처리
 
+> 예외(Exception)란?
+
+자바에서 오동작이나 결과에 악영향을 미칠 수 있는 실행 중 발생한 오류를 예외(exception)라고 한다. 문법에 맞지 않게 작성된 코드는 사전에 컴파일러에 의해 컴파일 오류(compile time error)로 걸러지지만, 예외는 사용자의 잘못된 입력이나 배열의 인덱스가 배열의 크기를 넘어가는 등, 예기치 못한 상황에 의해 프로그램 실행 중에 발생한다.  
+실행 중에 예외가 발생하는 몇 가지 경우를 나열해보자.
+
+- 정수를 0으로 나누는 경우
+- 배열의 크기보다 큰 인덱스로 배열의 원소를 접근하는 경우
+- 존재하지 않는 파일을 읽으려고 하는 경우
+- 정수 입력을 기다리는 코드가 실행되고 있을 때, 사용자가 문자를 입력한 경우
+
+실행 중에 예외가 발생하면 자바 플랫폼이 가장 먼저 알게 되어, 현재 실행 중인 응용프로그램에게 예외를 전달한다.  
+만일 응용프로그램이 예외에 대처하는 코드를 가지고 있지 않다면, 자바 플랫폼은 응용프로그램을 곧바로 종료시킨다.
+
+
+
+> 예외 발생 사례
+
+실제 예외가 발생하는 사례를 들어보자. 아래 예제는 0으로 나누기를 실행할 때 예외가 발생하여 응용프로그램이 강제로 종료되는 경우를 보여준다.
+
+```java
+import java.util.Scanner;
+
+public class DivideByZero {
+  public static void main(String[] args) {
+    Scanner scanner = new Scanner(System.in);
+    int dividend;		// 나뉨수
+    int divisor;		// 나눗수
+    
+    System.out.print("나뉨수를 입력하시오:");
+    dividend = scanner.nextInt();		// 나뉨수 입력
+    System.out.print("나눗수를 입력하시오:");
+    divisor = scanner.nextInt();		// 나눗수 입력
+    System.out.println(dividend+"를 "+ divisor + "로 나누면 몫은 " + dividend/divisor + "입니다.");
+    scanner.close();
+  }
+}
+```
+
+
+
+실행 결과
+
+```java
+나뉨수를 입력하시오:100
+나눗수를 입력하시오:0
+Exception in thread "main" java.lang.ArithmeticException: / by zero
+at DivideByZero.main(DivideByZero.java:14)
+```
+
