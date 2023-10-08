@@ -675,3 +675,165 @@ finally { } 블록은 생략해도 상관없으며 실제 많은 경우 생략�
 
 > 자바의 예외 클래스
 
+응용프로그램에서는 자바 플랫폼에서 제공하는 예외 클래스를 이용하여 예외 발생을 탐지할 수 있다. 자주 활용되는 예외 클래스는 아래 표와 같다.  
+실행 중  try 블록 내에ㅐ서 예외가 발생되면, 자바 플랫폼은  catch( ) 문의 '처리할 예외 타입 선언'부에 객체로 만들어 전달한다. 예외 객체는 발생한 예외에 대한 정보를 제공한다.
+
+![](./img/chapter3/ex20.jpg)
+
+다음은 배열의 범위를 벗어나 배열의 원소를 접근할 때 발생하는 ArrayIndexOutOfBoundException 예외를 처리하는 예이다.
+
+```java
+int intArray [] = new int[5];			// 인덱스는 0~4까지 가능
+try {
+	intArray [3] = 2;		// 예외 발생하지 않음
+	intArray [6] = 5;		// 예외 발생	<-	이 문장 실행 시 ArrayIndexOutOfBoundException 예외 발생
+}
+catch (ArrayIndexOutOfBoundException e) {		// 객체 e에 예외 정보가 넘어옴
+	System.out.println("배열의 범위를 초과하여 원소를 접근하였습니다.")
+}
+```
+
+다수의 예외를 처리하고자 하는 경우에는 여러 개의  catch 블록을 연속으로 작성할 수 있으며, 발생한 예외와 타입이 일치하는 catch 블록이 실행된다. 만일 발생한 예외 타입과 일치하는 catch 블록이 없으면 프로그램은 강제 종료된다.  
+catch 블록 내에서  System.exit(0)을 호출하면 언제든지 프로그램을 종료할 수 있다.
+
+- 0으로 나눌 때 발생하는  ArithmeticException 예외 처리
+
+  ```java
+  import java.util.Scanner;
+  
+  public class DevideByZeroHandling {
+  	public static void main (String[] args) {
+      Scanner scanner = new Scanner(System.in);
+      
+      while (true) {
+        System.out.print("나뉨수를 입력하시오:");
+        int dividend = scanner.nextInt();		// 나뉨수 입력
+        System.out.print("나뉨수를 입력하시오:");
+        int divisor = scanner.nextInt();		// 나눗수 입력
+        try {
+          System.out.println(dividend + "를 " + divisor + "로 나누면 몫은 "
+                             + dividend/divisor + "입니다.");
+          break;		// 정상적인 나누기 완료 후 while 벗어나기
+        }
+        catch (ArithmeticException e) {		// ArithmeticException 예외 처리 코드
+          System.out.println("0으로 나눌 수 없습니다! 다시 입력하세요");
+        }
+      }
+    }
+    scanner.close();
+  }
+  ```
+
+  실행 결과
+
+  ```java
+  나뉨수를 입력하시오:100
+  나눗수를 입력하시오:0
+  0으로 나눌 수 없습니다! 다시 입력하세요.
+  나뉨수를 입력하시오:100
+  나눗수를 입력하시오:5
+  100을 5로 나누면 몫은 20입니다.
+  ```
+
+- 범위를 벗어난 배열의 접근(ArrayIndexOutOfBoundsException)
+
+  ```java
+  public class ArrayException {
+  	public static void main (String[] args) {
+      int[] intArray = new int[5];
+      intArray[0] = 0;
+      try {
+        for (int i=0; i<5; i++) {
+          intArray[i+1] = i+1 + intArray[i];		// i=4인 경우 예외 발생
+          System.out.println("intArray[" + i +"]" + "=" + intArray[i]);
+        }
+      }
+        catch (ArithmeticException e) {
+          System.out.println("배열의 인덱스가 범위를 벗어났습니다.");
+        }
+    }
+  }
+  ```
+
+  실행 결과
+
+  ```java
+  intArray[0]=0;
+  intArray[1]=1
+  intArray[2]=3
+  intArray[3]=6
+  배열의 인덱스가 범위를 벗어났습니다.
+  ```
+
+- 입력 오류 시 발생하는 예외(InputMismatchException)
+
+  ```java
+  import java.util.Scanner;
+  import java.util.InputMismatchException;
+  
+  public class InputException {
+  	public static void main (String[] args) {
+      Scanner scanner = new Scanner(System.in);
+      System.out.println("정수 3개를 입력하세요");
+      int sum=0, n=0;
+      for(int i=0; i<3; i++) {
+        System.out.print(i+">>");
+        try {
+          n = scanner.nextInt();		// 정수 입력
+        }
+        catch(InputMismatchException e) {
+          System.out.println("정수가 아닙니다. 다시 입력하세요!");
+          scanner.nextLine();		// 현재 입력 스트림에 남아 있는 토큰을 지운다.
+          i--;	// 인덱스가 증가하지 않도록 미리 감소
+          continue;		// 다음 루프
+        }
+        sum += n;		// 합하기
+      }
+      System.out.println("합은 " + sum);
+      scanner.close();
+    }
+  }
+  ```
+
+  실행 결과
+
+  ```
+  정수 3개를 입력하세요
+  0>>5
+  1>>R
+  정수가 아닙니다. 다시 입력하세요!
+  1>>4
+  2>>6
+  합은 15
+  ```
+
+- 정수가 아닌 문자열을 정수로 변환할 때 예외 발생(NumberFormatException)
+
+  ```java
+  public class NumException {
+  	public static void main (String[] args) {
+      String[] stringNumber = {"23", "12", "3.141592", "998"};
+      
+      int i=0;
+      try {
+        for (i=0; i<stringNumber.length; i++) {
+          int j = Integer.parseInt(stringNumber[i]);
+          System.out.println("정수로 변환된 값은 " + j);
+        }
+      }
+      catch (NumberFormatException e) {
+        System.out.println(stringNumber[i] + "는 정수로 변환할 수 없습니다.");
+      }
+    }
+  }
+  ```
+
+  실행 결과
+
+  ```java
+  정수로 변환된 값은 23
+  정수로 변환된 값은 12
+  3.141592는 정수로 변환할 수 없습니다.
+  ```
+
+  
