@@ -22,7 +22,7 @@ public class Ex6 {
         int amount = scanner.nextInt();
         for (int i = 0; i<unit.length;i++) {
             if (amount/unit[i] != 0)
-                System.out.println(unit65[i] + "원 짜리 : " + amount/unit[i] + "개");
+                System.out.println(unit[i] + "원 짜리 : " + amount/unit[i] + "개");
             amount = amount % unit[i];
         }
         scanner.close();
