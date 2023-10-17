@@ -31,5 +31,28 @@ Exception in thread "main" java.util.InputMismatchException
 곱하고자 하는 두 수 입력>>4 3
 4x3=12
  */
+
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+//문제 표시를 위해 Multiply 대신 Ex15로 작성함.
 public class Ex15 {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            try {
+                System.out.print("곱하고자하는 두 수 입력>>");
+                int n = scanner.nextInt();
+                int m = scanner.nextInt();
+                System.out.print(n + "x" + m + "=" + n*m);
+                break;
+            }
+            catch (InputMismatchException e) {
+                System.out.println("실수는 입력하면 안됩니다.");
+                scanner.nextLine();
+                continue;
+            }
+        }
+        scanner.close();
+    }
 }

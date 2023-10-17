@@ -4,6 +4,26 @@
  */
 public class Ex10 {
     public static void main(String[] args) {
-
+        int[][] array = new int[4][4];
+        for (int i=0;i<4;i++) {
+            for (int j=0;j<4;j++) {
+                array[i][j] =0;
+            }
+        }
+        int count = 0;
+        while(count != 10) {
+            int i = (int)(Math.random()*4);
+            int j = (int)(Math.random()*4);
+            if(array[i][j] == 0){
+                array[i][j] = (int)(Math.random() * 10 + 1);
+                count++;
+            }
+        }
+        for (int i=0;i<4;i++) {
+            for (int j=0;j<4;j++) {
+                System.out.print(array[i][j]+ " ");
+            }
+            System.out.println("");
+        }
     }
 }
