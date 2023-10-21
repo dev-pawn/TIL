@@ -377,3 +377,56 @@ class Circle {
 this는 자바의 중요한 키워드로서 단어 뜻 그대로 객체 자신을 가리키는 레퍼런스이다.
 
 - this의 기초 개념
+
+  this는 현재 객체 자신에 대한 레퍼런스이다. 보다 정확히 말하면 현재 실행되고 있는 메소드가 속한 객체에 대한 레퍼런스이다.  
+  this는 컴파일러에 의해 자동 관리되므로 개발자는 this를 사용하기만 하면 된다. 다음 코드는  this를 사용하는 전형적인 예이다.
+
+  ```java
+  public class Circle {
+    int radius;
+    public Circle(int r) { this.radius = r; }
+    public int getRadius() { return radius; }
+  }
+  ```
+
+  this는 현재 객체에 대한 레퍼런스이므로, this.radius는 현재 객체의 멤버 radius를 접근한다.
+
+- this의 필요성
+
+  앞의  Circle 클래스에서 메소드 getRadius()는 다음과 같이 this를 사용하지 않았다. 클래스 내에서 멤버 radius를 접근할 때 굳이 this.radius로 할 필요가 없다.
+
+  ```java
+  return radius;		// return this.radius;와 동일
+  ```
+
+  그렇다면 this는 언제 필요할까? 매개변수의 이름은 그 자체로서 코드를 읽는 사람에게 그 용도를 나타내므로, 적합한 이름을 붙이는 것은 매우 중요하다.그래서  CIrcle(int r) 생성자의 매개변수를  r 대신 다음과 같이 radius로 변경하는 것이 좋다.
+
+  ```java
+  public Circle(int radius) { radius = radius; }
+  ```
+
+  하지만 이렇게 변경하면 어떤 일이 발생할까? 이 질문은 의외로 까다로운 질문이다. 생서자의 코드를 보자.
+
+  ```java
+  radius = radius;		// 여기서 2개의 radius는 모두 매개변수 radius를 접근한다.
+  ```
+
+  이 코드에서 2개의 radius는 모두 Circle(int radius)의 매개변수 radius를 접근하기 때문에, 멤버  radius를 변경하지 못한다.  
+  자바에서는 이 경우처럼 매개변수의 이름을 멤버 변수와 같은 이름으로 붙이고자 하는 경우가 허다한데, 이때 다음과 같이 this를 이용하면 된다.
+
+  ```java
+  public Circle(int radius) { this.radius = radius;}
+  ```
+
+  또 메소드가 객체 자신의 레퍼런스를 리턴해야 하는 경우가 있는데, 이때 다음과 같이 this를 리턴하면 된다.
+
+  ```java
+  public Circle getMe() { return this; }			// getMe() 메소드는 객체 자신의 레퍼런스 리턴
+  ```
+
+  이 경우에 대해서는 구체적인 설명을 생략한다. 프로그래밍에 대한 경력이 쌓여가면서 스스로 이해하게 될 것이다.
+
+- this의 상세 설명
+
+  
+
