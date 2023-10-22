@@ -428,5 +428,83 @@ this는 자바의 중요한 키워드로서 단어 뜻 그대로 객체 자신�
 
 - this의 상세 설명
 
+  아래 그림의 코드와 함께  this에 대해 조금 더 알아보자. 이 코드에서 main()은 3개의 Circle 객체를 생성한다. 객체가 있어야  this를 사용할 수 있다. ob1, ob2, ob3 개체에서 this는 각각 자기가 속한 객체에 대한 레퍼런스이다.  
+  ob1.set()이 실행될 때 this는  ob1 객체에 대한 레퍼런스이며,  ob.set()이 실행될 때 this는 ob2 객체에 대한 레퍼런스이다.
+
+  ![](./img/chapter4/ex13.jpg)
+
+> This()로 다른 생성자 호출
+
+this()는 클래스 내에서 생성자가 다른 생성자를 호출할 때 사용하는 자바 코드이다. 아래 예제는 3개의 생성자를 가진  Book 클래스에서  this()를 활용하는 코드 사례를 보여준다. 이 사례를 보면서  this()에 대해 알아보자.
+
+```java
+public class Book {
+	String title;
+  String author;
   
+  void show() { System.out.println(title + " " + author); }
+  
+  public Book() {
+    this("", "");
+    System.out.println("생성자 호출됨");
+  }
+  
+  public Book(String title) {
+    this(title, "작자미상");
+  }
+  
+  public Book(String title, String author) {
+    this.title = title;
+    this.author = author;
+  }
+  
+  public static void main(String [] args) {
+    Book littlePrince = new Book("어린왕자", "생텍쥐페리");
+    Book loveStory = new Book("춘향전");
+    Book emptyBook = new Book();
+    loveStory.show();
+  }
+}
+```
+
+위 예제의 main()에서 다음 객체 생성 문에 주목해보자.
+
+```java
+Book loveStory = new Book("춘향전");
+```
+
+new가 실행될 때  Book(String title) 생성자가 호출되며, title에는 "춘향전"이 전달된다. 그리고 생성자는 바로 다음  this() 문을 실행한다.
+
+```java
+this(title, "작자미상");
+```
+
+이  this() 문은 2개의 매개변수를 가진 다음 생성자를 다시 호출한다.
+
+```java
+public Book(String title, String author) {
+	...
+}
+```
+
+이 생성자에 의해 멤버 title과 author는 각각 "춘향전", "작자미상"으로 초기화된다.
+
+- this 사용 시 주의할 점
+
+  this() 상요 시 다음과 같이 주의할 사항이 있다.
+
+  - this()는 반드시 생서자 코드에서만 호출할 수 있다.
+  - this()는 반드시 같은 클래스 내 다른 생성자를 호출할 때 사용된다.
+  - this()는 반드시 생성자의 첫 번째 문장이 되어야 한다.
+
+  this()의 호출은 생성자 코드의 첫번째 문장이 되어야 하므로 Book 클래스의 다음 생성자에는 컴파일 오류가 발생한다.
+
+  ```java
+  public Book() {
+    System.out.println("생성자 호출됨");
+    this("", "");		// 컼파일 오류. this()는 생성자의 첫 번째 문장이어야 함
+  }
+  ```
+
+> 객체 치환 시 주의할 점
 
