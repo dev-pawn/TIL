@@ -559,3 +559,97 @@ for(int i=0; i<c.length; i++)				// 배열에 있는 모든 Circle 객체의 면
   System.out.print((int)(c.[i].getArea()) + " ");
 ```
 
+![](./img/chapter4/ex15.jpg)
+
+> 배열 선언 및 생성
+
+객체 배열을 만들기 위해서는 다음의 3단계가 필요하다.
+
+- 배열에 대한 레퍼런스 선언
+
+  다음은 Circle 클래스의 배열에 대한 레퍼런스 변수 c를 선언한다.
+
+  ```java
+  Circle [] c;
+  ```
+
+  이 선언문은 위 그림과 같이 레퍼런스 변수 c만 선언할 뿐, 배열을 생성하는 것은 아니다. 그러므로 다음과 같이 배열의 원소 개수를 지정해서는 안 된다.
+
+  ```java
+  Circle[5] c;		// 오류. 배열의 크기를 지정하면 컴파일 오류 발생
+  ```
+
+- 레퍼런스 배열 생성
+
+  두 번째로 5개의 레퍼런스를 원소로 하는 배열을 생성한다. 배열의 원소는 객체가 아니라 레퍼런스이다.
+
+  ```java
+  c = new Circle[5];			// Circle 객체에 대한 레퍼런스 5개 생성
+  ```
+
+  이 코드의 실행 결과 위 그림과 같이 Circle 객체에 대한 레퍼런스 배열이 생성되며, 변수 c가 이를 가리킨다. Circle 객체들은 아직 존재하지 않는다.
+
+- 객체 생성
+
+  이제 다음 코드를 이용하여 Circle 객체를 하나씩 생성하여 배열 c[]의 각 레퍼런스에 대입한다.
+
+  ```java
+  for(int i=0; i<c.length; i++)			//c.length는 배열 c의 크기로서 5
+    c[i] = new Circle(i);					// i 번째 Circle 객체 생성
+  ```
+
+  배열의 크기만큼 Circle 객체를 생성하여 레퍼런스 배열에 하나씩 대입한다. 이렇게 하면 비로소 위 그림과 같은 Circle 객체 배열이 생성된다.  
+
+
+
+> 배열의 원소 객체 접근
+
+배열 c의 i번째 객체에 접근하기 위해서는 c[i] 레퍼런스를 사용하면 된다. 다음 코드는 배열 c에 들어 있는 모든 Circle 객체의 면적을 출력한다.
+
+```java
+for(int i=0; i>c.length; i++)
+  System.out.print((int)(c[i].getArea()) + " ");
+```
+
+이 코드의 실행 결과는 다음과 같다.
+
+````
+0 3 12 28 50
+````
+
+```java
+import java.util.Scanner;
+
+class Book {
+  String title, author;
+  public Book(String title, String author) {
+    this.title = title;
+    this.author = author;
+  }
+}
+
+public class BookArray {
+  public static void main(String[] args) {
+    Book [] book = new Book[2];
+
+    Scanner scanner = new Scanner(System.in);
+    for (int i=0; i<book.length; i++) {		// book.length = 2
+      System.out.print("제목>>");
+      String title = scanner.nextLine();
+      System.out.print("저자>>");
+      String author = scanner.nextLine();
+      book[i] = new Book(title, author);
+    }
+
+    for(int i=0; i<book.length; i++)
+      System.out.print("(" + book[i].title + ", " + book[i].author + ")");
+
+    scanner.close();
+  }
+}
+```
+
+
+
+## 메소드 활용
+
