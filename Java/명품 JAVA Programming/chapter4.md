@@ -909,5 +909,27 @@ System.gc();		// 가비지 컬렉션 강제 요청
 
   ![](./img/chapter4/ex28.jpg)
 
+
+
+## static 멤버
+
+> static 멤버의 선언
+
+static 멤버는 다음과 같이 static을 붙여 선언한다.
+
+```java
+class StaticSample {
+  int n;							// non-static 필드
+  void g() {....}			// non-static 필드
   
+  static int m;				// static 필드
+  static void f() {....}		// static 메소드
+}
+```
+
+static으로 선언된 멤버는 non-static 멤버와 매우 다른 특성을 가진다.
+
+
+
+> non-static 멤버와 static 멤버의 차이점
 
