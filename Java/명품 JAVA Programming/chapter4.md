@@ -989,5 +989,37 @@ static 멤버를 가진 클래스의 객체가 생성되는 과정을 통해 sta
 
 
 
-> 
+> static 멤버의 생성 및 활용 2: 클래스명.static 멤버
+
+static 멤버를 접근하는 또 다른 방법이 있다.  static 멤버는 클래스당 하나만 있기 때문에 다음과 같이 클래스 이름으로 바로 접근할 수 있다.
+
+```java
+클래스명.static멤버
+```
+
+위 그림의 코드를 아래 그림과 같이 수정해보았다.
+
+![](./img/chapter4/ex31.jpg)
+
+main() 메소드의 다음 코드는 '클래스명.static멤버'를 사용하는 실례를 보여주며, new에 의해 객체가 생기기전에 static 멤버를 접근할 수 있음을 보여준다.
+
+```java
+StaticSample.m = 10;
+```
+
+static 메소드도 다음과 같이 2가지 방법으로 모두 접근 가능하다.
+
+```java
+s1.f();					// 객체 레퍼런스로 static 멤버 f() 호출
+StaticSample.f();			// 클래스명을 이용하여 static 멤버 f() 호출
+```
+
+그러나 다음 코드는 틀린 것이다. non-static 메소드는 클래스 이름으로 접근할 수 없다.
+
+```java
+StaticSample.h();			// h()는 non-static이므로 오류
+StaticSample.g();			// g()는 non-static이므로 오류
+```
+
+
 
